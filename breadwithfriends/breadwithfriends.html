@@ -3,8 +3,17 @@
 </head>
 
 <body>
-  {{> hello}}
+  {{> splash}}
 </body>
+
+<template name="splash">
+  <div id="splash">
+  <h3>Welcome to BreadWithFriends!</h3>
+  <!-- put an image here -->
+  <div id="tagline">Share food. Make friends. Live well.</div>
+  <input type="button" class="main-button" value="Sign in!"/>
+  </div>
+</template>
 
 <template name="hello">
   <h1>Hello World!</h1>

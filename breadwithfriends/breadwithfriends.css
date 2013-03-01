@@ -1,1 +1,12 @@
-/* CSS declarations go here */
+
+#splash {
+  text-align: center;
+}
+
+#tagline {
+  font-weight: bold;
+}
+
+input.main-button {
+  width: 100%;
+}
