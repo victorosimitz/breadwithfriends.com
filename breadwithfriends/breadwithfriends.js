@@ -1,14 +1,38 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to breadwithfriends.";
+
+  var switchToSplashScreen = function()
+  {
+    Session.set("showScreen",null);
+  } 
+
+  Template.page.showSplashScreen = function()
+  {
+    return (Session.get("showScreen")=="splash" || !Session.get("showScreen"));
   };
 
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-        alert("You pressed the button");
+  var switchToMealsNearMeScreen = function()
+  {
+    Session.set("showScreen","mealsNearMe");
+  }
+  
+  Template.page.showMealsNearMeScreen = function()
+  {
+    return (Session.get("showScreen")=="mealsNearMe");
+  }
+  
+  Template.splash.events({
+    'click #sign-in-button' : function(){
+      switchToMealsNearMeScreen();
     }
   });
+
+  Template.mealsNearMe.events({
+    'click #logout' : function () {
+      // template data, if any, is available in 'this'
+      switchToSplashScreen();
+    }
+  });
+
 }
 
 if (Meteor.isServer) {

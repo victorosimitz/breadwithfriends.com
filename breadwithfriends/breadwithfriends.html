@@ -3,20 +3,28 @@
 </head>
 
 <body>
-  {{> splash}}
+  {{> page}}
 </body>
+
+<template name="page">
+  {{#if showMealsNearMeScreen}}
+    {{> mealsNearMe}}
+  {{/if}}
+  {{#if showSplashScreen}}
+    {{> splash}}
+  {{/if}} 
+</template>
 
 <template name="splash">
   <div id="splash">
   <h3>Welcome to BreadWithFriends!</h3>
-  <!-- put an image here -->
+  <div id="food-graphic">&nbsp;</div>
   <div id="tagline">Share food. Make friends. Live well.</div>
-  <input type="button" class="main-button" value="Sign in!"/>
+  <input type="button" id="sign-in-button" value="Sign in!"/>
   </div>
 </template>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="mealsNearMe">
+  <h3>Meals near me</h3>
+  <input type="button" id="logout" value="this is boring, why did you take me here"/>
 </template>
