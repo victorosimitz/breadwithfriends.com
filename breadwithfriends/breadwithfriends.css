@@ -1,5 +1,10 @@
 
-#splash {
+#login {
+  margin: 5px;
+  text-align: right;
+}
+
+#main {
   text-align: center;
 }
 

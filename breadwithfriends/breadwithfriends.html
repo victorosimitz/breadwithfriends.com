@@ -7,12 +7,14 @@
 </body>
 
 <template name="page">
-  {{loginButtons align="right"}}
-  {{#if currentUser}}
-    {{> mealsNearMe}}
-  {{else}}
-    {{> splash}}
-  {{/if}} 
+  <div id="login">{{loginButtons align="right"}}</div>
+  <div id="main">
+    {{#if currentUser}}
+      {{> mealsNearMe}}
+    {{else}}
+      {{> splash}}
+    {{/if}} 
+  </div>
 </template>
 
 <template name="splash">
