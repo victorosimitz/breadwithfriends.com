@@ -43,7 +43,7 @@ Meals.allow({   //don't let the client write directly to the db for now
   }
 });
 
-Meals.validateMeal = function(meal)
+Meals.validateMeal = function(options)
 {
   if(! ( typeof options.title === "string" && options.title.length 
       && typeof options.description === "string" && options.description.length
@@ -98,7 +98,7 @@ Meteor.methods({
     //TODO verify that we don't already have a UserDetails for this user
     options.host_ratings = options.host_ratings || {};
     options.guest_ratings = options.guest_ratings || {};
-    if(!options.location == !(new Location(options.location).isValid()))
+    if(!options.location || !(new Location(options.location).isValid()))
     {
       throw new Meteor.Error(400, "Invalid user details")
     }
