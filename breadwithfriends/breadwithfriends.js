@@ -29,12 +29,22 @@ if (Meteor.isClient) {
   var switchToMealsNearMeScreen = function()
   {
     Session.set("showScreen","mealsNearMe");
-  }
+  };
   
   Template.page.showMealsNearMeScreen = function()
   {
-    return (Session.get("showScreen")=="mealsNearMe");
-  }
+    return (Session.get("showScreen")=="mealsNearMe" || !Session.get("showScreen"));
+  };
+
+  var switchToCreateMealScreen = function()
+  {
+    Session.set("showScreen","createMeal");
+  };
+
+  Template.page.showCreateMealScreen = function()
+  {
+    return (Session.get("showScreen")=="createMeal");
+  };
   
   Template.splash.events({
     'click #sign-in-button' : function(){
@@ -48,6 +58,9 @@ if (Meteor.isClient) {
 
   Template.mealsNearMe.events({
     'click #create-meal' : function () {
+      switchToCreateMealScreen();
+    },
+    'click #previous-create-meal' : function () {
       options={title:"Thai Food with Skiers",
                description:"Eat Thai food and talk about skiing",
                time:"03/18/2013 7:00 PM",

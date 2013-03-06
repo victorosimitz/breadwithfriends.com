@@ -10,7 +10,12 @@
   <div id="login">{{loginButtons align="right"}}</div>
   <div id="main">
     {{#if currentUser}}
-      {{> mealsNearMe}}
+      {{#if showMealsNearMeScreen}}
+        {{> mealsNearMe}}
+      {{/if}}
+      {{#if showCreateMealScreen}}
+        {{> createMeal}}
+      {{/if}}
     {{else}}
       {{> splash}}
     {{/if}} 
@@ -39,4 +44,8 @@
 
 <template name="meal">
  <li>{{title}}: {{description}}, at {{time}} {{#if adminUser}} [<span class="delete-meal">x</span>]{{/if}}</li>
+</template>
+
+<template name="createMeal">
+  <h3>New Meal</h3>
 </template>
