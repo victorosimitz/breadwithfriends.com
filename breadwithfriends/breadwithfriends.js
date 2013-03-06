@@ -60,7 +60,7 @@ if (Meteor.isClient) {
     'click #create-meal' : function () {
       switchToCreateMealScreen();
     },
-    'click #previous-create-meal' : function () {
+    'click #previous-create-meal' : function () { //DEPRECATED -- we can drop this soon
       options={title:"Thai Food with Skiers",
                description:"Eat Thai food and talk about skiing",
                time:"03/18/2013 7:00 PM",
@@ -79,6 +79,12 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.createMeal.events({
+    'click #add-meal' : function()
+    {
+      alert("oops its not built yet");
+    }
+  });
 
 }
 
