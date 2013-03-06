@@ -36,10 +36,10 @@ Meals.allow({   //don't let the client write directly to the db for now
     return false;
   },
   update: function(userId, docs, fieldNames, modifier){
-    return false;
+    return true;
   },
   remove: function(userId, docs){
-    return false;
+    return true;
   }
 });
 

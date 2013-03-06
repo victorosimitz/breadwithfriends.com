@@ -22,3 +22,10 @@
 #sign-in-button{
   font-weight: bold; //TODO this should be a FB image
 }
+
+.delete-meal:hover{
+  color:red;
+  cursor:pointer;
+}
+
+

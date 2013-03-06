@@ -1,9 +1,25 @@
 if (Meteor.isClient) {
 
+  var getCurrentUserDetails = function()
+  {
+    u = Meteor.user();
+    if(!u) return null;
+    return UserDetails.findOne({user_id:u._id});
+  };
+
+  var adminUser = function()
+  {
+    ud = getCurrentUserDetails();
+//    return JSON.stringify(ud);
+    if(ud && ud.admin) return ud.admin;
+    else return false; 
+  };
+  Handlebars.registerHelper("adminUser", function() { return adminUser(); });
+
   var switchToSplashScreen = function()
   {
     Session.set("showScreen",null);
-  } 
+  };
 
   Template.page.showSplashScreen = function()
   {
@@ -43,6 +59,13 @@ if (Meteor.isClient) {
       Meteor.call("createUserDetails", {location:{city:"Stanford",state:"CA",zip:"94305"}});
     }
   });
+  
+  Template.meal.events({
+    'click .delete-meal' : function () {
+      Meals.remove(this._id);
+    }
+  });
+
 
 }
 

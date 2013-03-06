@@ -32,9 +32,11 @@
     {{> meal}}
   {{/each}}
   </ul>
-  <input type="button" id="create-meal" value="add another meal"/>
+  {{#if adminUser}}
+    <input type="button" id="create-meal" value="Create New Meal"/>
+  {{/if}}
 </template>
 
 <template name="meal">
- <li>{{title}}: {{description}}, at {{time}}</li>
+ <li>{{title}}: {{description}}, at {{time}} {{#if adminUser}} [<span class="delete-meal">x</span>]{{/if}}</li>
 </template>
