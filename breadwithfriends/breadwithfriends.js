@@ -59,17 +59,6 @@ if (Meteor.isClient) {
   Template.mealsNearMe.events({
     'click #create-meal' : function () {
       switchToCreateMealScreen();
-    },
-    'click #previous-create-meal' : function () { //DEPRECATED -- we can drop this soon
-      options={title:"Thai Food with Skiers",
-               description:"Eat Thai food and talk about skiing",
-               time:"03/18/2013 7:00 PM",
-               location:{address:"2850 Middlefield Rd #227", city:"Palo Alto", state:"CA", zip:"94306"},
-               guests:{},
-               public:true
-              };
-      Meteor.call("createMeal", options);
-      Meteor.call("createUserDetails", {location:{city:"Stanford",state:"CA",zip:"94305"}});
     }
   });
   
@@ -82,7 +71,24 @@ if (Meteor.isClient) {
   Template.createMeal.events({
     'click #add-meal' : function()
     {
-      alert("oops its not built yet");
+      meal = {};
+      meal.title = document.getElementById("title").value.trim();
+      meal.description = document.getElementById("description").value.trim();
+      meal.time = document.getElementById("time").value.trim();
+      meal.location = {};
+      meal.location.address = document.getElementById("address").value.trim();
+      meal.location.city = document.getElementById("city").value.trim();
+      meal.location.state = document.getElementById("state").value.trim();
+      meal.location.zip = document.getElementById("zip").value.trim();
+      meal.public = document.getElementById("public").checked;
+      //alert(JSON.stringify(meal));
+      if(!UserDetails.findOne({user_id:this.userId}))  //TODO we really should move this check somewhere else
+        Meteor.call("createUserDetails",{});
+      Meteor.call("createMeal", meal);
+    },
+    'click #cancel' : function()
+    {
+      switchToMealsNearMeScreen();
     }
   });
 

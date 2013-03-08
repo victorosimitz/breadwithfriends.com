@@ -23,7 +23,7 @@
   font-weight: bold; //TODO this should be a FB image
 }
 
-.delete-meal:hover{
+.clickable:hover{
   color:red;
   cursor:pointer;
 }

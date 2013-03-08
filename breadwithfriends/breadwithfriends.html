@@ -43,7 +43,7 @@
 </template>
 
 <template name="meal">
- <li>{{title}}: {{description}}, at {{time}} {{#if adminUser}} [<span class="delete-meal">x</span>]{{/if}}</li>
+ <li>{{title}}: {{description}}, at {{time}} {{#if adminUser}} [<span class="delete-meal clickable">x</span>]{{/if}}</li>
 </template>
 
 <template name="createMeal">
@@ -56,5 +56,5 @@
   <label for="state">State:</label><input type="text" id="state"/>
   <label for="zip">Zip Code:</label><input type="text" id="zip"/>
   <div id="q_public"><input type="checkbox" id="public" checked/><label for="public">Open to the public.</label></div>
-  <input type="button" id="add-meal" value="Create Meal"/>
+  <input type="button" id="add-meal" value="Create Meal"/>&nbsp;<span id="cancel" class="clickable">Cancel</span>
 </template>
