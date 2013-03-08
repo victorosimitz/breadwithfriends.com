@@ -1,5 +1,12 @@
 // Data Model for BreadWithFriends
 
+if(Meteor.isServer)
+{
+  Meteor.publish("allUserData", function() {
+    return Meteor.users.find({}, {fields: {'emails':1, 'profile':1}});
+  });
+}
+
 // First some utility classes that are useful throughout
 
 function Location(options)  // general class for location that we use in a bunch of places

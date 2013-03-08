@@ -1,4 +1,5 @@
 if (Meteor.isClient) {
+  Meteor.subscribe("allUserData");  
 
   var getCurrentUserDetails = function()
   {
@@ -51,9 +52,15 @@ if (Meteor.isClient) {
     return (getCurrentScreenName()=="createMeal");
   };
 
+  var switchToMealDetailsScreen = function(meal_id)
+  {
+    if(!meal_id) return; //just ignore it if we don't have a meal
+    Session.set("showScreen",{screen_name:"mealDetails", meal_id:meal_id});
+  };
+
   Template.page.showMealDetailsScreen = function()
   {
-    Session.set("showScreen",{screen_name:"mealDetails"});
+    return (getCurrentScreenName()=="mealDetails");
   };
   
   Template.splash.events({
@@ -77,7 +84,7 @@ if (Meteor.isClient) {
       Meals.remove(this._id);
     },
     'click .show-meal-details' : function() {
-      alert(this._id);
+      switchToMealDetailsScreen(this._id);
     }
   });
 
@@ -104,6 +111,34 @@ if (Meteor.isClient) {
       switchToMealsNearMeScreen();
     }
   });
+
+  Template.mealDetails.events({
+    'click .cancel' : function() { switchToMealsNearMeScreen(); }
+  });
+ 
+  Template.mealDetails.title = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.title;
+  };
+
+  Template.mealDetails.description = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.description;
+  };
+
+  Template.mealDetails.host = function()
+  {
+    return "nelbert";
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    if(!meal) return undefined;
+    host = Meteor.users.findOne(meal.host);
+    return JSON.stringify(host);
+    if(host && host.profile && host.profile.first_name) return host.profile.first_name;
+    if(host && host.emails) return host.emails[0].address;
+    return "Anonymous"; //it's pretty bad if we're here
+  }
 
 }
 
