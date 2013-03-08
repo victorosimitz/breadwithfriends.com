@@ -10,7 +10,6 @@ if (Meteor.isClient) {
   var adminUser = function()
   {
     ud = getCurrentUserDetails();
-//    return JSON.stringify(ud);
     if(ud && ud.admin) return ud.admin;
     else return false; 
   };
@@ -81,10 +80,10 @@ if (Meteor.isClient) {
       meal.location.state = document.getElementById("state").value.trim();
       meal.location.zip = document.getElementById("zip").value.trim();
       meal.public = document.getElementById("public").checked;
-      //alert(JSON.stringify(meal));
       if(!UserDetails.findOne({user_id:this.userId}))  //TODO we really should move this check somewhere else
         Meteor.call("createUserDetails",{});
       Meteor.call("createMeal", meal);
+      switchToMealsNearMeScreen();
     },
     'click #cancel' : function()
     {
