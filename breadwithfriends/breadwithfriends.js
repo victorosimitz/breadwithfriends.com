@@ -15,34 +15,45 @@ if (Meteor.isClient) {
   };
   Handlebars.registerHelper("adminUser", function() { return adminUser(); });
 
+  var getCurrentScreenName = function() //convenience method: extract the name of the current screen
+  {
+    if(!Session.get("showScreen")) return undefined;
+    return Session.get("showScreen").screen_name;
+  }
+
   var switchToSplashScreen = function()
   {
-    Session.set("showScreen",null);
+    Session.set("showScreen",undefined);
   };
 
   Template.page.showSplashScreen = function()
   {
-    return (Session.get("showScreen")=="splash" || !Session.get("showScreen"));
+    return (getCurrentScreenName()=="splash" || !getCurrentScreenName());
   };
 
   var switchToMealsNearMeScreen = function()
   {
-    Session.set("showScreen","mealsNearMe");
+    Session.set("showScreen",{screen_name: "mealsNearMe"});
   };
   
   Template.page.showMealsNearMeScreen = function()
   {
-    return (Session.get("showScreen")=="mealsNearMe" || !Session.get("showScreen"));
+    return (getCurrentScreenName() == "mealsNearMe" || !getCurrentScreenName());
   };
 
   var switchToCreateMealScreen = function()
   {
-    Session.set("showScreen","createMeal");
+    Session.set("showScreen",{screen_name:"createMeal"});
   };
 
   Template.page.showCreateMealScreen = function()
   {
-    return (Session.get("showScreen")=="createMeal");
+    return (getCurrentScreenName()=="createMeal");
+  };
+
+  Template.page.showMealDetailsScreen = function()
+  {
+    Session.set("showScreen",{screen_name:"mealDetails"});
   };
   
   Template.splash.events({
@@ -64,6 +75,9 @@ if (Meteor.isClient) {
   Template.meal.events({
     'click .delete-meal' : function () {
       Meals.remove(this._id);
+    },
+    'click .show-meal-details' : function() {
+      alert(this._id);
     }
   });
 
