@@ -130,13 +130,13 @@ if (Meteor.isClient) {
 
   Template.mealDetails.host = function()
   {
-    return "nelbert";
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     if(!meal) return undefined;
     host = Meteor.users.findOne(meal.host);
-    return JSON.stringify(host);
+    //TODO instead of first name return first name and last initial e.g. "Victor O."
     if(host && host.profile && host.profile.first_name) return host.profile.first_name;
-    if(host && host.emails) return host.emails[0].address;
+    //NB. we should always have a first name so if we get to any of these fallbacks we have a problem
+    if(host && host.emails) return host.emails[0].address; //this really should never happen
     return "Anonymous"; //it's pretty bad if we're here
   }
 
