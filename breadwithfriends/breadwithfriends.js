@@ -138,8 +138,37 @@ if (Meteor.isClient) {
     //NB. we should always have a first name so if we get to any of these fallbacks we have a problem
     if(host && host.emails) return host.emails[0].address; //this really should never happen
     return "Anonymous"; //it's pretty bad if we're here
-  }
+  };
+  
+  Template.mealDetails.time = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.time;
+  };
 
+  Template.mealDetails.address = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.location.address;
+  };
+
+  Template.mealDetails.city = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.location.city;
+  };
+
+  Template.mealDetails.state = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.location.state;
+  };
+
+  Template.mealDetails.zip = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.location.zip;
+  };
 }
 
 if (Meteor.isServer) {
