@@ -69,5 +69,12 @@
   <p>{{description}}</p>
   <p>Hosted by {{host}}, {{time}}</p>
   <p>{{city}}, {{state}} {{zip}}</p>
-  <span class="cancel clickable">Cancel</span>
+  {{#if currentlyReserved}}
+    <p>You have signed up for this meal!</p>
+    <p><input type="button" id="cancelMeal" value="Cancel Reservation"/></p>
+    <p><span class="cancel clickable">View Other Meals</span></p>
+  {{else}}
+    <input type="button" id="reserveMeal" value="Reserve a Spot!"/>
+    <span class="cancel clickable">No, thanks</span>
+  {{/if}}
 </template>

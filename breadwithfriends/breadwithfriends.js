@@ -94,6 +94,7 @@ if (Meteor.isClient) {
     return formatPrice(price);
   }
 
+
   Template.createMeal.events({
     'click #add-meal' : function()
     {
@@ -120,7 +121,13 @@ if (Meteor.isClient) {
   });
 
   Template.mealDetails.events({
-    'click .cancel' : function() { switchToMealsNearMeScreen(); }
+    'click .cancel' : function() { switchToMealsNearMeScreen(); },
+    'click #reserveMeal' : function() { 
+      Meteor.call("res_markReserved",Session.get("showScreen").meal_id);
+    },
+    'click #cancelMeal' : function() { 
+      Meteor.call("res_markCanceled",Session.get("showScreen").meal_id);
+    }
   });
  
   Template.mealDetails.title = function()
@@ -182,6 +189,37 @@ if (Meteor.isClient) {
   {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     return meal && meal.location.zip;
+  };
+
+  Template.mealDetails.canSignUp = function()
+  {
+    /* NB.
+        Need better validation here. Don't let people sign up for meals that are 
+       in the past. Don't let people sign up for meals that are at their capacity
+       limit. Don't let people sign up for meals that they are blacklisted from.
+       Don't let people sign back up for meals that they have canceled?
+    */
+    existing_reservation = Reservations.findOne({meal_id:this._id,user_id:this.userId})
+    if(!(existing_reservation && existing_reservation.status_history))
+      return true; //no existing reservation, can definitely sign up
+    if(existing_reservation.status_history[0].status == "RESERVED")
+      return false; //already signed up, can't do it again
+    if(existing_reservation.status_history[0].status == "RATED")
+      return false; //it's in the past and already rated, can't change status now
+    return true; //if we make it here we're good to go
+  };
+
+  Template.mealDetails.currentlyReserved = function()
+  {
+    meal_id=Session.get("showScreen").meal_id;
+    user_id=Meteor.userId();
+//    alert(meal_id + " " + user_id);
+    existing_reservation = Reservations.findOne({meal_id:meal_id,user_id:user_id})
+//    alert(JSON.stringify(existing_reservation));
+    if(existing_reservation && existing_reservation.status_history[0].status == "RESERVED")
+      return true;
+    else
+      return false; 
   };
 }
 
