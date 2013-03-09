@@ -46,7 +46,7 @@
 </template>
 
 <template name="meal">
- <li>{{title}}: {{description}}, at {{time}} [<span class="show-meal-details clickable">details</span>{{#if adminUser}} | <span class="delete-meal clickable">delete</span>{{/if}}]</li>
+ <li>{{title}}: {{description}}, at {{time}} ({{price}}) [<span class="show-meal-details clickable">details</span>{{#if adminUser}} | <span class="delete-meal clickable">delete</span>{{/if}}]</li>
 </template>
 
 <template name="createMeal">
@@ -58,12 +58,14 @@
   <label for="city">City:</label><input type="text" id="city" value="Stanford"/>
   <label for="state">State:</label><input type="text" id="state" value="CA"/>
   <label for="zip">Zip Code:</label><input type="text" id="zip" value="94305"/>
+  <label for="price">Price:</label><input type="text" id="price" value="12.95"/>
   <div id="q_public"><input type="checkbox" id="public" checked/><label for="public">Open to the public.</label></div>
   <input type="button" id="add-meal" value="Create Meal"/>&nbsp;<span id="cancel" class="clickable">Cancel</span>
 </template>
 
 <template name="mealDetails">
   <h3>Meal Details: {{title}}</h3>
+  <p>{{price}}</p>
   <p>{{description}}</p>
   <p>Hosted by {{host}}, {{time}}</p>
   <p>{{city}}, {{state}} {{zip}}</p>

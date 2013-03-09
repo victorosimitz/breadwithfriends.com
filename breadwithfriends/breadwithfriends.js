@@ -78,7 +78,7 @@ if (Meteor.isClient) {
       switchToCreateMealScreen();
     }
   });
-  
+
   Template.meal.events({
     'click .delete-meal' : function () {
       Meals.remove(this._id);
@@ -87,6 +87,12 @@ if (Meteor.isClient) {
       switchToMealDetailsScreen(this._id);
     }
   });
+
+  Template.meal.price = function()
+  {
+    price = this.price || 0.0;
+    return formatPrice(price);
+  }
 
   Template.createMeal.events({
     'click #add-meal' : function()
@@ -100,6 +106,7 @@ if (Meteor.isClient) {
       meal.location.city = document.getElementById("city").value.trim();
       meal.location.state = document.getElementById("state").value.trim();
       meal.location.zip = document.getElementById("zip").value.trim();
+      meal.price = Math.round(100 * parseFloat(document.getElementById("price").value.trim())); //store as pennies
       meal.public = document.getElementById("public").checked;
       if(!UserDetails.findOne({user_id:this.userId}))  //TODO we really should move this check somewhere else
         Meteor.call("createUserDetails",{});
@@ -127,6 +134,13 @@ if (Meteor.isClient) {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     return meal && meal.description;
   };
+  
+  Template.mealDetails.price = function()
+  { 
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    price = ((meal && meal.price) || 0);
+    return formatPrice(price);
+  }
 
   Template.mealDetails.host = function()
   {

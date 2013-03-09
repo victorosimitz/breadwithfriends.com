@@ -25,11 +25,20 @@ Location.prototype.isValid = function()
   return true;
 }
 
+var formatPrice = function(pennies)
+{ 
+  if(!price) price=0.00;
+  price /= 100;
+  priceStr = "$" + price.toFixed(2);
+  return priceStr;
+}
+
 /* Meals ///////////////////////////////////
   title: title of the meal,
   description: longer description of the meal,
   time: date and time of the meal,
   location: e.g. {address: "47 Olmsted Rd", city: "Stanford", state: "CA", zip: "94305"},
+  price: the price in USD of the meal, per person
   host: user id of the host,
   guests: array of user ids of the guests who are attending this meal,
   public: Boolean,
@@ -58,6 +67,7 @@ Meals.validateMeal = function(options)
       && options.location && typeof options.location.city === "string" && options.location.city.length
       && typeof options.location.state === "string" && options.location.state.length == 2
       && typeof options.location.zip === "string" && options.location.zip.length == 5
+      && typeof options.price === "number" && options.price >= 0
       && options.host
       && typeof options.public === "boolean")){
     return false;
@@ -75,6 +85,7 @@ Meteor.methods({
     if(!Meals.validateMeal(options))
     {
       throw new Meteor.Error(400, "Invalid meal");
+      console.log("Error in createMeal: invalid meal " + JSON.stringify(options));
     }
     options.guests = options.guests || {};
     options.invites = options.invites || {};
