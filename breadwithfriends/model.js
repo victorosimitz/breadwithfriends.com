@@ -25,7 +25,7 @@ Location.prototype.isValid = function()
   return true;
 }
 
-var formatPrice = function(pennies)
+var formatPrice = function(price) //expects price to be expressed in pennies
 { 
   if(!price) price=0.00;
   price /= 100;
