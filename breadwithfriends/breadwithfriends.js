@@ -62,6 +62,17 @@ if (Meteor.isClient) {
   {
     return (getCurrentScreenName()=="mealDetails");
   };
+
+  var switchToReserveMealScreen = function(meal_id)
+  {
+    if(!meal_id) return;
+    Session.set("showScreen",{screen_name:"reserveMeal", meal_id:meal_id});
+  }
+
+  Template.page.showReserveMealScreen = function()
+  {
+    return (getCurrentScreenName()=="reserveMeal");
+  }
   
   Template.splash.events({
     'click #sign-in-button' : function(){
@@ -123,7 +134,8 @@ if (Meteor.isClient) {
   Template.mealDetails.events({
     'click .cancel' : function() { switchToMealsNearMeScreen(); },
     'click #reserveMeal' : function() { 
-      Meteor.call("res_markReserved",Session.get("showScreen").meal_id);
+      //Meteor.call("res_markReserved",Session.get("showScreen").meal_id);
+      switchToReserveMealScreen(Session.get("showScreen").meal_id);
     },
     'click #cancelMeal' : function() { 
       Meteor.call("res_markCanceled",Session.get("showScreen").meal_id);
@@ -213,14 +225,36 @@ if (Meteor.isClient) {
   {
     meal_id=Session.get("showScreen").meal_id;
     user_id=Meteor.userId();
-//    alert(meal_id + " " + user_id);
     existing_reservation = Reservations.findOne({meal_id:meal_id,user_id:user_id})
-//    alert(JSON.stringify(existing_reservation));
     if(existing_reservation && existing_reservation.status_history[0].status == "RESERVED")
       return true;
     else
       return false; 
   };
+
+  Template.reserveMeal.events({
+    "click #reserveMeal" : function()
+    {
+      Meteor.call("res_markReserved",Session.get("showScreen").meal_id);
+    },
+    "click .cancel" : function()
+    {
+      switchToMealDetailsScreen(Session.get("showScreen").meal_id);
+    }
+  });
+  
+  Template.reserveMeal.meal = function()
+  {
+    meal_id=Session.get("showScreen").meal_id;
+    meal = Meals.findOne(meal_id);
+    return meal;
+  };
+
+  Template.reserveMeal.guestName = function()
+  {
+    return getUserFullName(Meteor.userId());
+  };
+
 }
 
 if (Meteor.isServer) {

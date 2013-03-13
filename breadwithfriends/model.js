@@ -33,6 +33,24 @@ var formatPrice = function(pennies)
   return priceStr;
 }
 
+var getUserFullName = function(user_id)
+{
+  if(!user_id){
+    return null;
+  }
+  u = Meteor.users.findOne(user_id);
+  if(!u) return null;
+  if(u.profile && u.profile.name)
+  {
+    return u.profile.name;
+  }
+  if(u.profile && u.profile.first_name)
+  {
+    return u.profile.last_name ? (u.profile.first_name + " " + u.profile.last_name) : u.profile.first_name;
+  }
+  if(u.emails) return u.emails[0].address;  //this should never happen in production, if we don't have a full name for somebody that's pretty bad
+};
+
 /* Meals ///////////////////////////////////
   title: title of the meal,
   description: longer description of the meal,
