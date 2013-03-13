@@ -240,6 +240,10 @@ if (Meteor.isClient) {
     "click .cancel" : function()
     {
       switchToMealDetailsScreen(Session.get("showScreen").meal_id);
+    },
+    "keypress #numGuests, blur #numGuests" : function()
+    {
+      document.getElementById("totalCost").innerHTML = Template.reserveMeal.totalCost();
     }
   });
   
@@ -255,6 +259,24 @@ if (Meteor.isClient) {
     return getUserFullName(Meteor.userId());
   };
 
+  Template.reserveMeal.numGuests = function()
+  {
+    if(!document.getElementById("numGuests"))
+      return "1"; //default value
+    return document.getElementById("numGuests").value.trim();
+  };
+
+  Template.reserveMeal.calculateTotalCost = function()
+  {
+    pricePerPerson=this.meal().price; //Template.reserveMeal.meal().price;
+    numGuests = parseInt(this.numGuests());
+    return pricePerPerson * numGuests;
+  };
+
+  Template.reserveMeal.totalCost = function()
+  {
+    return formatPrice(Template.reserveMeal.calculateTotalCost());
+  };
 }
 
 if (Meteor.isServer) {
