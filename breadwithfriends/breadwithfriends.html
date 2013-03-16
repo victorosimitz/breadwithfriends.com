@@ -1,10 +1,14 @@
 <head>
-  <title>breadwithfriends</title>
+  <title>BreadWithFriends</title>
 </head>
 
 <body>
   {{> page}}
 </body>
+
+<!-- 
+  This is a simple container for other templates defined in the "screens" directory.
+-->
 
 <template name="page">
   <div id="login">{{loginButtons align="right"}}</div>
@@ -29,66 +33,4 @@
       {{> splash}}
     {{/if}} 
   </div>
-</template>
-
-<template name="splash">
-  <div id="splash">
-  <h3>Welcome to BreadWithFriends!</h3>
-  <div id="food-graphic">&nbsp;</div>
-  <div id="tagline">Share food. Make friends. Live well.</div>
-  </div>
-</template>
-
-<template name="mealsNearMe">
-  <h3>Meals near me</h3>
-  <ul>
-  {{#each meals}}
-    {{> meal}}
-  {{/each}}
-  </ul>
-  {{#if adminUser}}
-    <input type="button" id="create-meal" value="Create New Meal"/>
-  {{/if}}
-</template>
-
-<template name="meal">
- <li>{{title}}: {{description}}, at {{time}} ({{price}}) [<span class="show-meal-details clickable">details</span>{{#if adminUser}} | <span class="delete-meal clickable">delete</span>{{/if}}]</li>
-</template>
-
-<template name="createMeal">
-  <h3>New Meal</h3>
-  <label for="title">Meal Title: </label><input type="text" id="title" value="Skiers Dinner"/> 
-  <label for="description">Description:</label><input type="text" id="description" value="Eat with fellow skiers"/>
-  <label for="time">Time:</label><input type="text" id="time" value="04/01/2013 7:00 p.m."/>
-  <label for="address">Address:</label><input type="text" id="address" value="47 Olmsted Rd #219"/>
-  <label for="city">City:</label><input type="text" id="city" value="Stanford"/>
-  <label for="state">State:</label><input type="text" id="state" value="CA"/>
-  <label for="zip">Zip Code:</label><input type="text" id="zip" value="94305"/>
-  <label for="price">Price:</label><input type="text" id="price" value="12.95"/>
-  <div id="q_public"><input type="checkbox" id="public" checked/><label for="public">Open to the public.</label></div>
-  <input type="button" id="add-meal" value="Create Meal"/>&nbsp;<span id="cancel" class="clickable">Cancel</span>
-</template>
-
-<template name="mealDetails">
-  <h3>Meal Details: {{title}}</h3>
-  <p>{{price}}</p>
-  <p>{{description}}</p>
-  <p>Hosted by {{host}}, {{time}}</p>
-  <p>{{city}}, {{state}} {{zip}}</p>
-  {{#if currentlyReserved}}
-    <p>You have signed up for this meal!</p>
-    <p><input type="button" id="cancelMeal" value="Cancel Reservation"/></p>
-    <p><span class="cancel clickable">View Other Meals</span></p>
-  {{else}}
-    <input type="button" id="reserveMeal" value="Reserve a Spot!"/>
-    <span class="cancel clickable">No, thanks</span>
-  {{/if}}
-</template>
-
-<template name="reserveMeal">
- <h3>Reserve Meal: {{meal.title}}</h3>
- <p><strong>Your name:</strong> {{guestName}}</p>
- <p><label for="numGuests">Number of guests:</label><input type="text" id="numGuests" value="{{numGuests}}"/></p>
- <p><strong>Total cost:</strong> <span id="totalCost">{{totalCost}}</span></p>
- <p><input type="button" id="reserveMeal" value="Reserve!"/> <span class="cancel clickable">Cancel</span></p>
 </template>

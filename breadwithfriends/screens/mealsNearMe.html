@@ -1,0 +1,15 @@
+<template name="mealsNearMe">
+  <h3>Meals near me</h3>
+  <ul>
+  {{#each meals}}
+    {{> meal}}
+  {{/each}}
+  </ul>
+  {{#if adminUser}}
+    <input type="button" id="create-meal" value="Create New Meal"/>
+  {{/if}}
+</template>
+
+<template name="meal">
+ <li>{{title}}: {{description}}, at {{time}} ({{price}}) [<span class="show-meal-details clickable">details</span>{{#if adminUser}} | <span class="delete-meal clickable">delete</span>{{/if}}]</li>
+</template>
