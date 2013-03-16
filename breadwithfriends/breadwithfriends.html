@@ -9,6 +9,9 @@
 <template name="page">
   <div id="login">{{loginButtons align="right"}}</div>
   <div id="main">
+    {{#if message}}
+      <div id="message">{{message}}</div>
+    {{/if}}
     {{#if currentUser}}
       {{#if showMealsNearMeScreen}}
         {{> mealsNearMe}}

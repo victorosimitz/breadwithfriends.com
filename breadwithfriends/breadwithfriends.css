@@ -8,6 +8,15 @@
   text-align: center;
 }
 
+#message { 
+  width:80%;
+  padding: 5px;
+  margin: 10px;
+  border: 1px dashed;
+  color: green;
+  text-align: left;
+}
+
 #food-graphic {
   background: url('food.jpg') no-repeat fixed center;
   background-size: cover;
