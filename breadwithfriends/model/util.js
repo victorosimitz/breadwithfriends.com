@@ -41,3 +41,17 @@ var getUserFullName = function(user_id)
   }
   if(u.emails) return u.emails[0].address;  //this should never happen in production, if we don't have a full name for somebody that's pretty bad
 };
+
+var getUserShortName = function(user_id)
+{
+  if(!user_id){
+    return null;
+  }
+  u = Meteor.users.findOne(user_id);
+  if(!u) return null;
+  //TODO instead of first name return first name and last initial e.g. "Victor O."
+  if(u && u.profile && u.profile.first_name) return u.profile.first_name;
+  //NB. we should always have a first name so if we get to any of these fallbacks we have a problem
+  if(u && u.emails) return u.emails[0].address; //this really should never happen
+  return "Anonymous"; //this would be pretty embarrassing
+};
