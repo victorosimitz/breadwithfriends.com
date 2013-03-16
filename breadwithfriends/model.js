@@ -128,7 +128,7 @@ Reservations.allow({
 Reservations.createOrUpdateReservation = function (user_id, meal_id, status)
 {
   r = Reservations.findOne({user_id:user_id, meal_id:meal_id});
-  console.log(JSON.stringify(r));
+  //console.log(JSON.stringify(r));
   if(!r) // first activity on this reservation so we need to create it
   {
     console.log("Gotta create r");
