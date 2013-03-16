@@ -1,5 +1,4 @@
 if (Meteor.isClient) {
-  Meteor.subscribe("allUserData");  
 
   var getCurrentUserDetails = function()
   {

@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-  //nothing to do here right now
+//     Meteor.subscribe("allUserData");  
 }
 
 if (Meteor.isServer) {
