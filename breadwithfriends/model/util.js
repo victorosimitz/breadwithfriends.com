@@ -1,4 +1,4 @@
-// First some utility classes and functions that are useful in a lot of different places
+// Some utility classes and functions that are useful in a lot of different places
 
 function Location(options)  // general class for location that we use in a bunch of places
 {

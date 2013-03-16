@@ -10,6 +10,8 @@
   invites: array of user ids of all guests who are specifically invited to this meal
 */
 
+//TODO add image
+//TODO add min and max # attendees
 Meals = new Meteor.Collection("meals");
 
 Meals.allow({   //don't let the client write directly to the db for now
