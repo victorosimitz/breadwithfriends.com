@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-
+  
   Template.mealsNearMe.meals = function(){
     return Meals.find(); //TODO make this smarter
   };
@@ -29,4 +29,9 @@ if (Meteor.isClient) {
   {
     return formatDateTime(this.time);
   };
+  
+  Template.meal.past = function()
+  {
+    return this.time <= Session.get("server_time") ? "past" : "";
+  }
 }
