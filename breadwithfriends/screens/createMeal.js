@@ -14,9 +14,15 @@ if (Meteor.isClient) {
       meal.location.zip = document.getElementById("zip").value.trim();
       meal.price = Math.round(100 * parseFloat(document.getElementById("price").value.trim())); //store as pennies
       meal.public = document.getElementById("public").checked;
-      if(!UserDetails.findOne({user_id:this.userId}))  //TODO we really should move this check somewhere else
+      if(!UserDetails.findOne({user_id:this.userId}))  //TODO do we still need this?
         Meteor.call("createUserDetails",{});
-      Meteor.call("createMeal", meal);
+      invites = document.getElementById("invites").value.trim().split(",");
+      Meteor.call("createMeal", meal, function(error, meal_id)
+      {
+        //now handle invitations
+        invite_set = {event:meal_id, invited_users:invites};
+        Meteor.call("createInvitations",invite_set);
+      });
       switchToMealsNearMeScreen();
     },
     'click #cancel' : function()

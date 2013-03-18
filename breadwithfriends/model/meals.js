@@ -57,6 +57,6 @@ Meteor.methods({
     }
     options.guests = options.guests || {};
     options.invites = options.invites || {};
-    Meals.insert(options);
+    return Meals.insert(options);
   }
 });
