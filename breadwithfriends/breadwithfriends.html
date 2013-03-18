@@ -27,7 +27,10 @@
         {{> reserveMeal}}
       {{/if}}
       {{#if showCreateOrUpdateEventScreen}}
-        {{> createOrUpdateEvent}}
+        {{> createOrUpdateEventScreen}}
+      {{/if}}
+      {{#if showEventInvitesScreen}}
+        {{> eventInvitesScreen }}
       {{/if}}
     {{else}}
       {{> splash}}

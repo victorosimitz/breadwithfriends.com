@@ -46,6 +46,17 @@ if (Meteor.isClient) {
   {
     return (getCurrentScreenName()=="createOrUpdateEvent");
   };
+  
+  var switchToEventInvitesScreen = function(event_id,message)
+  {
+    if(!event_id) return; //just ignore it without an event
+    Session.set("showScreen",{screen_name:"eventInvites", event_id:event_id, message:message});
+  };
+  
+  Template.page.showEventInvitesScreen = function()
+  {
+    return (getCurrentScreenName()=="eventInvites");
+  };
 
   var switchToMealDetailsScreen = function(meal_id,message)
   {

@@ -18,14 +18,17 @@ if (Meteor.isClient) {
   });
 
   Template.meal.events({
+    'click .show-meal-details' : function() {
+      switchToMealDetailsScreen(this._id);
+    },
+    'click .manage-invites' : function() {
+      switchToEventInvitesScreen(this._id);
+    },
     'click .edit-meal' : function() {
       switchToCreateOrUpdateEventScreen(this._id);
     },
     'click .delete-meal' : function () {
       Meals.remove(this._id);
-    },
-    'click .show-meal-details' : function() {
-      switchToMealDetailsScreen(this._id);
     }
   });
 

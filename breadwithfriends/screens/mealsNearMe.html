@@ -16,7 +16,8 @@
 <template name="meal">
  <li class="{{past}}">{{title}}: {{description}}, at {{time}} ({{price}}) 
    [<span class="show-meal-details clickable">details</span>{{#if canEdit}} | <span
-   class="edit-meal clickable">edit</span> | 
+   class="manage-invites clickable">invites</span> |
+   <span class="edit-meal clickable">edit</span> | 
    <span class="delete-meal clickable">delete</span>{{/if}}]
  </li>
 </template>
