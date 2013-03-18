@@ -1,12 +1,12 @@
 if (Meteor.isClient) {
 
-  Template.createOrUpdateEvent.creatingNewEvent = function()
+  Template.createOrUpdateEventScreen.creatingNewEvent = function()
   {
     if(!Session.get("showScreen").meal_id) return true;
     else return false;
   }
   
-  Template.createOrUpdateEvent.get_event = function()
+  Template.createOrUpdateEventScreen.get_event = function()
   {
     if(Session.get("showScreen").meal_id)
     {
@@ -27,19 +27,19 @@ if (Meteor.isClient) {
     }
   };
   
-  Template.createOrUpdateEvent.time = function()
+  Template.createOrUpdateEventScreen.time = function()
   {
-    evt = Template.createOrUpdateEvent.get_event();
+    evt = Template.createOrUpdateEventScreen.get_event();
     return formatDateTime(evt.time);
   };
   
-  Template.createOrUpdateEvent.price = function()
+  Template.createOrUpdateEventScreen.price = function()
   {
-    evt = Template.createOrUpdateEvent.get_event();
+    evt = Template.createOrUpdateEventScreen.get_event();
     return formatPrice(evt.price,true/*number*/)
   };
 
-  Template.createOrUpdateEvent.events({
+  Template.createOrUpdateEventScreen.events({
     'click #create-or-update-event' : function()
     {
       meal = {};
