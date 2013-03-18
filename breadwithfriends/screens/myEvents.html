@@ -1,16 +1,16 @@
-<template name="mealsNearMe">
-  <h3>Meals near me</h3>
+<template name="eventsNearMe">
+  <h3>My Events</h3>
   <ul>
-  <!-- First the upcoming meals -->
+  <!-- First the upcoming events -->
   {{#each meals_upcoming}}
     {{> meal}}
   {{/each}}
-  <!-- Now historic meals -->
+  <!-- Now historic events -->
   {{#each meals_historic}}
     {{> meal}}
   {{/each}}
   </ul>
-  <input type="button" id="create-meal" value="Create New Meal"/>
+  <input type="button" id="create-meal" value="Create New Event"/>
 </template>
 
 <template name="meal">
