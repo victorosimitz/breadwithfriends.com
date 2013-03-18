@@ -40,5 +40,12 @@ if (Meteor.isClient) {
   Template.meal.past = function()
   {
     return this.time <= Session.get("server_time") ? "past" : "";
-  }
+  };
+  
+  Template.meal.canEdit = function()
+  {
+    if(adminUser()) return true; //admins can edit anything
+    if(this.host == Meteor.userId()) return true; //people can edit their own meals
+    return false;
+  };
 }

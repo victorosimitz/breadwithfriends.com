@@ -14,5 +14,7 @@
 </template>
 
 <template name="meal">
- <li class="{{past}}">{{title}}: {{description}}, at {{time}} ({{price}}) [<span class="show-meal-details clickable">details</span>{{#if adminUser}} | <span class="delete-meal clickable">delete</span>{{/if}}]</li>
+ <li class="{{past}}">{{title}}: {{description}}, at {{time}} ({{price}}) 
+   [<span class="show-meal-details clickable">details</span>{{#if canEdit}} | <span class="delete-meal clickable">delete</span>{{/if}}]
+ </li>
 </template>
