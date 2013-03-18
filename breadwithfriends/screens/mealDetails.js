@@ -40,7 +40,7 @@ if (Meteor.isClient) {
   Template.mealDetails.time = function()
   {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
-    return meal && meal.time;
+    return meal && formatDateTime(meal.time);
   };
 
   Template.mealDetails.address = function()

@@ -23,5 +23,10 @@ if (Meteor.isClient) {
   {
     price = this.price || 0.0;
     return formatPrice(price);
-  }
+  };
+  
+  Template.meal.time = function()
+  {
+    return formatDateTime(this.time);
+  };
 }

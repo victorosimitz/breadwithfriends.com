@@ -1,7 +1,7 @@
 /* Meals ///////////////////////////////////
   title: title of the meal,
   description: longer description of the meal,
-  time: date and time of the meal,
+  time: date and time of the meal, a UNIX timestamp in milliseconds
   location: e.g. {address: "47 Olmsted Rd", city: "Stanford", state: "CA", zip: "94305"},
   price: the price in USD of the meal, per person
   host: user id of the host,
@@ -30,7 +30,7 @@ Meals.validateMeal = function(options)
 {
   if(! ( typeof options.title === "string" && options.title.length 
       && typeof options.description === "string" && options.description.length
-      && typeof options.time === "string" && options.time.length      //TODO more robust validation here
+      && typeof options.time === "number"      //TODO validate that the date isn't in the past
       && options.location && typeof options.location.city === "string" && options.location.city.length
       && typeof options.location.state === "string" && options.location.state.length == 2
       && typeof options.location.zip === "string" && options.location.zip.length == 5

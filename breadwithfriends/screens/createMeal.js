@@ -6,7 +6,7 @@ if (Meteor.isClient) {
       meal = {};
       meal.title = document.getElementById("title").value.trim();
       meal.description = document.getElementById("description").value.trim();
-      meal.time = document.getElementById("time").value.trim();
+      meal.time = parseDateTime(document.getElementById("time").value.trim());
       meal.location = {};
       meal.location.address = document.getElementById("address").value.trim();
       meal.location.city = document.getElementById("city").value.trim();
