@@ -1,9 +1,50 @@
 if (Meteor.isClient) {
 
+  Template.createOrUpdateEvent.creatingNewEvent = function()
+  {
+    if(!Session.get("showScreen").meal_id) return true;
+    else return false;
+  }
+  
+  Template.createOrUpdateEvent.get_event = function()
+  {
+    if(Session.get("showScreen").meal_id)
+    {
+      return Meals.findOne(Session.get("showScreen").meal_id);
+    }
+    else
+    {
+      return {title:"Skiers' Dinner",
+              description:"Eat with fellow skiers",
+              time:"Apr 1, 2013 7:30 pm",
+              location:
+                {address: "47 Olmsted Rd #219",
+                 city: "Stanford",
+                 state: "CA",
+                 zip: "94305"},
+               price: 1295,
+               public: true};
+    }
+  };
+  
+  Template.createOrUpdateEvent.time = function()
+  {
+    evt = Template.createOrUpdateEvent.get_event();
+    return formatDateTime(evt.time);
+  };
+  
+  Template.createOrUpdateEvent.price = function()
+  {
+    evt = Template.createOrUpdateEvent.get_event();
+    return formatPrice(evt.price,true/*number*/)
+  };
+
   Template.createOrUpdateEvent.events({
-    'click #add-meal' : function()
+    'click #create-or-update-event' : function()
     {
       meal = {};
+      if(Session.get("showScreen").meal_id)
+        meal._id = Session.get("showScreen").meal_id;
       meal.title = document.getElementById("title").value.trim();
       meal.description = document.getElementById("description").value.trim();
       meal.time = parseDateTime(document.getElementById("time").value.trim());
@@ -17,13 +58,21 @@ if (Meteor.isClient) {
       if(!UserDetails.findOne({user_id:this.userId}))  //TODO do we still need this?
         Meteor.call("createUserDetails",{});
       invites = document.getElementById("invites").value.trim().split(",");
-      Meteor.call("createMeal", meal, function(error, meal_id)
+      if(!meal._id)
       {
-        //now handle invitations
-        invite_set = {event:meal_id, invited_users:invites};
-        Meteor.call("createInvitations",invite_set);
-      });
-      switchToMealsNearMeScreen();
+		Meteor.call("createMeal", meal, function(error, meal_id)
+		{
+		  //now handle invitations
+		  invite_set = {event:meal_id, invited_users:invites};
+		  Meteor.call("createInvitations",invite_set);
+		});
+		switchToMealsNearMeScreen("Added a new meal: " + meal.title);
+      }
+      else
+      {
+        Meteor.call("updateMeal",meal); //still need to do something with invitations
+        switchToMealsNearMeScreen("Updated meal: " + meal.title);
+      }
     },
     'click #cancel' : function()
     {

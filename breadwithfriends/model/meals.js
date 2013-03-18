@@ -19,10 +19,10 @@ Meals.allow({   //don't let the client write directly to the db for now
     return false;
   },
   update: function(userId, docs, fieldNames, modifier){
-    return true;
+    return false;
   },
   remove: function(userId, docs){
-    return true;
+    return true; //TODO should disable this and add a delete function in the methods below
   }
 });
 
@@ -52,11 +52,24 @@ Meteor.methods({
     }
     if(!Meals.validateMeal(options))
     {
-      throw new Meteor.Error(400, "Invalid meal");
       console.log("Error in createMeal: invalid meal " + JSON.stringify(options));
+      throw new Meteor.Error(400, "Invalid meal");
     }
     options.guests = options.guests || {};
     options.invites = options.invites || {};
     return Meals.insert(options);
+  },
+  updateMeal: function(meal){ //TODO should combine this with createMeal
+    meal = meal || {};
+    if(!meal.host)
+    {
+      meal.host = this.userId;
+    }
+    if(!Meals.validateMeal(meal) || !meal._id)
+    {
+      console.log("Error in updateMeal: invalid meal " + JSON.stringify(meal));
+      throw new Meteor.Error(400, "Invalid meal");
+    }
+    Meals.update(meal._id, meal);
   }
 });

@@ -1,14 +1,18 @@
 <template name="createOrUpdateEvent">
+  {{#if creatingNewEvent}}
   <h3>New Event</h3>
-  <label for="title">Meal Title: </label><input type="text" id="title" value="Skiers Dinner"/> 
-  <label for="description">Description:</label><input type="text" id="description" value="Eat with fellow skiers"/>
-  <label for="time">Time:</label><input type="text" id="time" value="Apr 1, 2013 7:00 pm"/>
-  <label for="address">Address:</label><input type="text" id="address" value="47 Olmsted Rd #219"/>
-  <label for="city">City:</label><input type="text" id="city" value="Stanford"/>
-  <label for="state">State:</label><input type="text" id="state" value="CA"/>
-  <label for="zip">Zip Code:</label><input type="text" id="zip" value="94305"/>
-  <label for="price">Price:</label><input type="text" id="price" value="12.95"/>
-  <div id="q_public"><input type="checkbox" id="public" checked/><label for="public">Open to the public.</label></div>
+  {{else}}
+  <h3>Update Event</h3>
+  {{/if}}
+  <label for="title">Meal Title: </label><input type="text" id="title" value="{{get_event.title}}"/> 
+  <label for="description">Description:</label><input type="text" id="description" value="{{get_event.description}}"/>
+  <label for="time">Time:</label><input type="text" id="time" value="{{time}}"/>
+  <label for="address">Address:</label><input type="text" id="address" value="{{get_event.location.address}}"/>
+  <label for="city">City:</label><input type="text" id="city" value="{{get_event.location.city}}"/>
+  <label for="state">State:</label><input type="text" id="state" value="{{get_event.location.state}}"/>
+  <label for="zip">Zip Code:</label><input type="text" id="zip" value="{{get_event.location.zip}}"/>
+  <label for="price">Price:</label><input type="text" id="price" value="{{price}}"/>
+  <div id="q_public"><input type="checkbox" id="public" {{#if get_event.public}}checked{{/if}}/><label for="public">Open to the public.</label></div>
   <div id="q_invites"><label for="invites">Invited people:</label><textarea rows="4" cols="25" id="invites"/></div>
-  <input type="button" id="add-meal" value="Create Meal"/>&nbsp;<span id="cancel" class="clickable">Cancel</span>
+  <input type="button" id="create-or-update-event" value="{{#if creatingNewEvent}}Create Event{{else}}Update Event{{/if}}"/>&nbsp;<span id="cancel" class="clickable">Cancel</span>
 </template>

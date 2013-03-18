@@ -16,11 +16,11 @@ Location.prototype.isValid = function()
   return true;
 }
 
-var formatPrice = function(price) //expects price to be expressed in pennies
+var formatPrice = function(price, output_number) //expects price to be expressed in pennies
 { 
   if(!price) price=0.00;
   price /= 100;
-  priceStr = "$" + price.toFixed(2);
+  priceStr = (!output_number ? "$" : "") + price.toFixed(2);
   return priceStr;
 }
 
