@@ -18,6 +18,9 @@ if (Meteor.isClient) {
   });
 
   Template.meal.events({
+    'click .edit-meal' : function() {
+      switchToCreateOrUpdateEventScreen(this._id);
+    },
     'click .delete-meal' : function () {
       Meals.remove(this._id);
     },
