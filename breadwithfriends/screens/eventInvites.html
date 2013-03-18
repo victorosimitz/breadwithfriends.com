@@ -1,5 +1,22 @@
 <template name="eventInvitesScreen">
   <h3>Manage Invitations: <span id="show_event" class="clickable">{{get_event.title}}</span></h3>
-  <p>yada yada yada</p>
-  <p><span id="done" class="clickable">Done</span></p>
+  <!--<p>X invites sent, Y people attending, Z people haven't responded yet</p>-->
+  <table>
+    <tr>
+      <th>Person</th>
+      <th>RSVP</th>
+    </tr>
+    {{#each invites}}
+      {{> invite}}
+    {{/each}}
+  </table>
+  <p><label for="new_invite">Enter an email address to add an invite: </label><input type="text" id="new_invite"/></p>
+  <p><input type="button" value="Add" id="add_invite"/> <span id="done" class="clickable">Done</span></p>
+</template>
+
+<template name="invite">
+  <tr>
+    <td>{{invited_name}}</td>
+    <td>{{rsvp}}</td>
+  </tr>
 </template>
