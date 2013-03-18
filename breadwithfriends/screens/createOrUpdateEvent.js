@@ -60,17 +60,17 @@ if (Meteor.isClient) {
       if(!meal._id)
       {
 		Meteor.call("createMeal", meal);
-		switchToMealsNearMeScreen("Added a new meal: " + meal.title);
+		switchToMyEventsScreen("Added a new event: " + meal.title);
       }
       else
       {
         Meteor.call("updateMeal",meal); //still need to do something with invitations
-        switchToMealsNearMeScreen("Updated meal: " + meal.title);
+        switchToMyEventsScreen("Updated event: " + meal.title);
       }
     },
     'click #cancel' : function()
     {
-      switchToMealsNearMeScreen();
+      switchToMyEventsScreen();
     }
   });
 }

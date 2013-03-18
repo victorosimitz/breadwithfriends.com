@@ -1,17 +1,17 @@
 if (Meteor.isClient) {
   
-  Template.eventsNearMe.meals_upcoming = function(){
+  Template.myEvents.meals_upcoming = function(){
     server_time = Session.get("server_time");
     return Meals.find({time: {$gt: server_time}}, {sort:[["time","asc"]]});
   };
   
-  Template.eventsNearMe.meals_historic = function(){
+  Template.myEvents.meals_historic = function(){
     server_time = Session.get("server_time");
     //TODO only show a few historic meals and only going back a few weeks?
     return Meals.find({time: {$lte: server_time}}, {sort:[["time","desc"]]});
   };
 
-  Template.eventsNearMe.events({
+  Template.myEvents.events({
     'click #create-meal' : function () {
       switchToCreateOrUpdateEventScreen();
     }

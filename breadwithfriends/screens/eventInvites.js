@@ -34,7 +34,7 @@ if(Meteor.isClient)
     },
     'click #done': function()
     {
-      switchToMealsNearMeScreen();
+      switchToMyEventsScreen();
     }
   });
   

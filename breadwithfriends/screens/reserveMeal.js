@@ -4,7 +4,7 @@ if (Meteor.isClient) {
     "click #reserveMeal" : function()
     {
       Meteor.call("res_markReserved",Session.get("showScreen").meal_id);
-      switchToMealsNearMeScreen("Successfully reserved meal!");
+      switchToMyEventsScreen("Successfully reserved meal!");
     },
     "click .cancel" : function()
     {

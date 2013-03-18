@@ -23,14 +23,14 @@ if (Meteor.isClient) {
     return (getCurrentScreenName()=="splash" || !getCurrentScreenName());
   };
 
-  var switchToMealsNearMeScreen = function(message)
+  var switchToMyEventsScreen = function(message)
   {
-    Session.set("showScreen",{screen_name: "mealsNearMe", message:message});
+    Session.set("showScreen",{screen_name: "myEvents", message:message});
   };
   
-  Template.page.showMealsNearMeScreen = function()
+  Template.page.showMyEventsScreen = function()
   {
-    return (getCurrentScreenName() == "mealsNearMe" || !getCurrentScreenName());
+    return (getCurrentScreenName() == "myEvents" || !getCurrentScreenName());
   };
 
   /* if meal_id is null, create a new meal, otherwise edit an existing one */

@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
 
   Template.mealDetails.events({
-    'click .cancel' : function() { switchToMealsNearMeScreen(); },
+    'click .cancel' : function() { switchToMyEventsScreen(); },
     'click #reserveMeal' : function() { 
       //Meteor.call("res_markReserved",Session.get("showScreen").meal_id);
       switchToReserveMealScreen(Session.get("showScreen").meal_id);
