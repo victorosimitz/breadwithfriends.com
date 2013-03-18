@@ -1,7 +1,12 @@
 <template name="mealsNearMe">
   <h3>Meals near me</h3>
   <ul>
-  {{#each meals}}
+  <!-- First the upcoming meals -->
+  {{#each meals_upcoming}}
+    {{> meal}}
+  {{/each}}
+  <!-- Now historic meals -->
+  {{#each meals_historic}}
     {{> meal}}
   {{/each}}
   </ul>
