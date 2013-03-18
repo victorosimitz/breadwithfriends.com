@@ -57,15 +57,9 @@ if (Meteor.isClient) {
       meal.public = document.getElementById("public").checked;
       if(!UserDetails.findOne({user_id:this.userId}))  //TODO do we still need this?
         Meteor.call("createUserDetails",{});
-      invites = document.getElementById("invites").value.trim().split(",");
       if(!meal._id)
       {
-		Meteor.call("createMeal", meal, function(error, meal_id)
-		{
-		  //now handle invitations
-		  invite_set = {event:meal_id, invited_users:invites};
-		  Meteor.call("createInvitations",invite_set);
-		});
+		Meteor.call("createMeal", meal);
 		switchToMealsNearMeScreen("Added a new meal: " + meal.title);
       }
       else
