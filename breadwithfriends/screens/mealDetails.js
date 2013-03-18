@@ -66,6 +66,12 @@ if (Meteor.isClient) {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     return meal && meal.location.zip;
   };
+  
+  Template.mealDetails.inThePast = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal.time <= Session.get("server_time");
+  }
 
   Template.mealDetails.canSignUp = function()
   {
