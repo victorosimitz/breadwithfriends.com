@@ -30,7 +30,8 @@ Meals.validateMeal = function(options)
 {
   if(! ( typeof options.title === "string" && options.title.length 
       && typeof options.description === "string" && options.description.length
-      && typeof options.time === "number"      //TODO validate that the date isn't in the past
+      //TODO validate that the date isn't in the past -- for now this is useful for testing purposes
+      && typeof options.time === "number" 
       && options.location && typeof options.location.city === "string" && options.location.city.length
       && typeof options.location.state === "string" && options.location.state.length == 2
       && typeof options.location.zip === "string" && options.location.zip.length == 5
