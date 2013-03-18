@@ -13,7 +13,7 @@ if (Meteor.isClient) {
 
   Template.mealsNearMe.events({
     'click #create-meal' : function () {
-      switchToCreateMealScreen();
+      switchToCreateOrUpdateEventScreen();
     }
   });
 

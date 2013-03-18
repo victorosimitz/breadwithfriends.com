@@ -1,6 +1,6 @@
 if (Meteor.isClient) {
 
-  Template.createMeal.events({
+  Template.createOrUpdateEvent.events({
     'click #add-meal' : function()
     {
       meal = {};
