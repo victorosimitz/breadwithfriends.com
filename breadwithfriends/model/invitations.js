@@ -116,6 +116,8 @@ Meteor.methods({
     Invitations.update(invitation_id, {$set:{response:rsvp}});
     if(token)
       Invitations.update(invitation_id, {$set:{token:token}});
+    else
+      Invitations.update(invitation_id, {$unset:{token:1}});
     Meals.updateStatus(inv.event);
   }
 });
