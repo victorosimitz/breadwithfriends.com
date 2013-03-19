@@ -6,15 +6,17 @@ if (Meteor.isClient) {
     },
     'click .cancel' : function() { switchToMyEventsScreen(); },
     'click #yes_rsvp' : function() {
-      Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes");
       StripeCheckout.open({
-        key: 'pk_test_LY4crE00znRKpy6FvQW0SMaQ',   //TODO stripe key should go in Session
+        key: 'pk_test_LY4crE00znRKpy6FvQW0SMaQ',   //TODO stripe public key should go in Session
         address: false,
         amount: Template.mealDetails.event().price,
         name: "BreadWithFriends",
         description: Template.mealDetails.event().title,
         panelLabel: 'Enter payment information',
-        token: function(res) { alert(JSON.stringify(res)); } //TODO implement a real callback
+        token: function(res) { 
+          alert(JSON.stringify(res)); 
+          Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes",res.id);
+        } //TODO implement a real callback
       });
     },
     'click #no_rsvp' : function() {
