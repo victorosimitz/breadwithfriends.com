@@ -89,6 +89,13 @@ if (Meteor.isClient) {
     return meal && meal.location.zip;
   };
   
+  Template.mealDetails.status = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    if(meal.status) return meal.status;
+    else return JSON.stringify(meal);
+  };
+  
   Template.mealDetails.min_guests = function()
   {
     meal = Meals.findOne(Session.get("showScreen").meal_id);

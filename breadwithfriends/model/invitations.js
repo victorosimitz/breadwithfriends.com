@@ -102,11 +102,18 @@ Meteor.methods({
     Invitations.insert(invitation);
   },
   rsvp: function(invitation_id, rsvp){
+    inv = Invitations.findOne(invitation_id);
+    if(!inv)
+    {
+      console.log("Invalid invitation to RSVP: " + invitation_id);
+      throw new Meteor.Error(400, "Invalid RSVP");
+    }
     if(!Invitations.validateResponse(rsvp))
     {
       console.log("Invalid RSVP: " + rsvp);
       throw new Meteor.Error(400, "Invalid RSVP");
     }
-    Invitations.update(invitation_id,{$set:{response:rsvp}});
+    Invitations.update(invitation_id, {$set:{response:rsvp}});
+    Meals.updateStatus(inv.event);
   }
 });
