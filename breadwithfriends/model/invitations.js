@@ -77,47 +77,66 @@ Invitations.countInvites = function(event_id, rsvp)
   return c.count();
 };
 
-Meteor.methods({
-  createInvitations: function(invite_set){ //right now we assume users are invited by email address
-    invite_set.inviting_user = invite_set.inviting_user || this.userId;
-    //console.log(JSON.stringify(invite_set));
-    for(i in invite_set.invited_users)
-    {
-      invited_user = invite_set.invited_users[i].trim();
-      invitation = {event:invite_set.event,
-                    inviting_user:invite_set.inviting_user,
-                    invited_user:{email:invited_user}};
-      if(!Invitations.validateInvitation(invitation)) //log an error and keep going
-        console.log("Invalid invitation: " + JSON.stringify(invitation));
-      Invitations.insert(invitation);
-    }
-  },
-  createInvitation: function(invitation){
-    invitation.inviting_user = invitation.inviting_user || this.userId;
-    if(!Invitations.validateInvitation(invitation))
-    {
-      console.log("Invalid invitation: " + JSON.stringify(invitation));
-      throw new Meteor.Error(400, "Invalid invitation");
-    }
-    Invitations.insert(invitation);
-  },
-  rsvp: function(invitation_id, rsvp, token){
-    inv = Invitations.findOne(invitation_id);
-    if(!inv)
-    {
-      console.log("Invalid invitation to RSVP: " + invitation_id);
-      throw new Meteor.Error(400, "Invalid RSVP");
-    }
-    if(!Invitations.validateResponse(rsvp))
-    {
-      console.log("Invalid RSVP: " + rsvp);
-      throw new Meteor.Error(400, "Invalid RSVP");
-    }
-    Invitations.update(invitation_id, {$set:{response:rsvp}});
-    if(token)
-      Invitations.update(invitation_id, {$set:{token:token}});
-    else
-      Invitations.update(invitation_id, {$unset:{token:1}});
-    Meals.updateStatus(inv.event);
-  }
-});
+if(Meteor.isServer)
+{
+  
+  Invitations.getAllUnpaid = function(event_id)
+  {
+    i = Invitations.find({event:event_id,response:"yes",paid:{$exists:false}});
+    console.log(JSON.stringify({event:event_id,response:"yes",paid:{$exists:false}}));
+    return i;
+  };
+  
+  Invitations.markPaid = function(inv_id)
+  {
+    //TODO really should log actual payments here
+    Fiber(function(){
+      Invitations.update(inv_id,{$set:{paid:true}});
+    }).run();
+  };
+
+  Meteor.methods({
+	createInvitations: function(invite_set){ //right now we assume users are invited by email address
+	  invite_set.inviting_user = invite_set.inviting_user || this.userId;
+	  //console.log(JSON.stringify(invite_set));
+	  for(i in invite_set.invited_users)
+	  {
+		invited_user = invite_set.invited_users[i].trim();
+		invitation = {event:invite_set.event,
+					  inviting_user:invite_set.inviting_user,
+					  invited_user:{email:invited_user}};
+		if(!Invitations.validateInvitation(invitation)) //log an error and keep going
+		  console.log("Invalid invitation: " + JSON.stringify(invitation));
+		Invitations.insert(invitation);
+	  }
+	},
+	createInvitation: function(invitation){
+	  invitation.inviting_user = invitation.inviting_user || this.userId;
+	  if(!Invitations.validateInvitation(invitation))
+	  {
+		console.log("Invalid invitation: " + JSON.stringify(invitation));
+		throw new Meteor.Error(400, "Invalid invitation");
+	  }
+	  Invitations.insert(invitation);
+	},
+	rsvp: function(invitation_id, rsvp, token){
+	  inv = Invitations.findOne(invitation_id);
+	  if(!inv)
+	  {
+		console.log("Invalid invitation to RSVP: " + invitation_id);
+		throw new Meteor.Error(400, "Invalid RSVP");
+	  }
+	  if(!Invitations.validateResponse(rsvp))
+	  {
+		console.log("Invalid RSVP: " + rsvp);
+		throw new Meteor.Error(400, "Invalid RSVP");
+	  }
+	  Invitations.update(invitation_id, {$set:{response:rsvp}});
+	  if(token)
+		Invitations.update(invitation_id, {$set:{token:token}});
+	  else
+		Invitations.update(invitation_id, {$unset:{token:1}});
+	  Meals.updateStatus(inv.event);
+	}
+  });
+}

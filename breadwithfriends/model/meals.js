@@ -48,70 +48,97 @@ Meals.validateMeal = function(options)
   return true;
 };
 
-Meals.updateStatus = function(event_id)
+if(Meteor.isServer)
 {
-  evt = Meals.findOne(event_id);
-  if(!evt) return null;
-  old_status = evt.status;
-  new_status = null;
-  confirmed_invites = Invitations.countInvites(event_id,"yes");
-  //if # confirmed invites is less than min_guests, we are WAITING
-  if(confirmed_invites < evt.min_guests)
+  Meals.updateStatus = function(event_id)
   {
-    new_status = 'WAITING';
-  }
-  //if # confirmed invites in [min_guests, max_guests), we are CONFIRMED
-  if(!evt.min_guests || (confirmed_invites >= evt.min_guests && confirmed_invites < evt.max_guests))
-  {
-    new_status = 'CONFIRMED';
-  }
-  //if # confirmed invites equals or exceeds max_guests, we are FULL
-  if(evt.max_guests && confirmed_invites >= evt.max_guests)
-  {
-    new_status = 'FULL';
-  }
-  //if we have switched from WAITING to CONFIRMED/FULL we may need to charge a bunch of people
-  if(old_status == 'WAITING' && (new_status == 'CONFIRMED' || new_status == 'FULL'))
-  {
-    //TODO call to payment logic here
-    console.log("Just switched from WAITING to " + new_status + ". May need to charge a bunch of people");
-  }
-  //console.log(old_status + " " + new_status + " " + confirmed_invites + " " + evt.min_guests + " " + evt.max_guests);
-  if(!new_status) new_status = old_status; //this is pretty weird but let's handle it gracefully
-  Meals.update(event_id,{$set:{status:new_status}});
-  return new_status;
-};
+	evt = Meals.findOne(event_id);
+	if(!evt) return null;
+	old_status = evt.status;
+	new_status = null;
+	confirmed_invites = Invitations.countInvites(event_id,"yes");
+	applyCharges = true; //if still true at the end we'll charge everybody who hasn't paid yet
+	//if # confirmed invites is less than min_guests, we are WAITING
+	if(confirmed_invites < evt.min_guests)
+	{
+	  new_status = 'WAITING';
+	  applyCharges = false; //the event isn't a sure thing yet, don't charge
+	}
+	//if # confirmed invites in [min_guests, max_guests), we are CONFIRMED
+	if(!evt.min_guests || (confirmed_invites >= evt.min_guests && confirmed_invites < evt.max_guests))
+	{
+	  new_status = 'CONFIRMED';
+	}
+	//if # confirmed invites equals or exceeds max_guests, we are FULL
+	if(evt.max_guests && confirmed_invites >= evt.max_guests)
+	{
+	  new_status = 'FULL';
+	}
+	//if we have switched from WAITING to CONFIRMED/FULL we may need to charge a bunch of people
+	if(old_status == 'WAITING' && (new_status == 'CONFIRMED' || new_status == 'FULL'))
+	{
+	  //TODO call to payment logic here
+	  console.log("Just switched from WAITING to " + new_status + ". May need to charge a bunch of people");
+	}
+	//console.log(old_status + " " + new_status + " " + confirmed_invites + " " + evt.min_guests + " " + evt.max_guests);
+	if(!new_status) new_status = old_status; //this is pretty weird but let's handle it gracefully
+	Meals.update(event_id,{$set:{status:new_status}});
+	if(applyCharges)
+	{
+	  console.log("Applying charges for event " + evt.title);
+	  Invitations.getAllUnpaid(event_id).forEach(function(inv)
+	  {
+	    console.log("Applying charges for invitation " + JSON.stringify(inv));
+	    if(inv.token)
+	    {
+		  if(evt.price > 0)
+		  {
+			processPayment(evt.price,inv.token,function(e,r)
+			{
+			  if(e) console.log(JSON.stringify(e)); //some issue in payment, log it and move on
+			  else {
+			    console.log(JSON.stringify(r));
+			    Invitations.markPaid(inv._id);
+			  }
+			});
+		  }
+	    }
+	  });
+	}
+	return new_status;
+  };
 
-Meteor.methods({
-  createMeal: function(meal){
-    meal = meal || {};
-    if(!meal.host)
-    {
-      meal.host = this.userId;
-    }
-    if(!Meals.validateMeal(meal))
-    {
-      console.log("Error in createMeal: invalid meal " + JSON.stringify(meal));
-      throw new Meteor.Error(400, "Invalid meal");
-    }
-    meal.min_guests = meal.min_guests || 0;
-    meal_id = Meals.insert(meal);
-    Meals.updateStatus(meal_id);
-    return meal_id;
-  },
-  updateMeal: function(meal){ //TODO should combine this with createMeal
-    meal = meal || {};
-    if(!meal.host)
-    {
-      meal.host = this.userId;
-    }
-    if(!Meals.validateMeal(meal) || !meal._id)
-    {
-      console.log("Error in updateMeal: invalid meal " + JSON.stringify(meal));
-      throw new Meteor.Error(400, "Invalid meal");
-    }
-    meal.min_guests = meal.min_guests || 0;
-    Meals.update(meal._id, meal);
-    Meals.updateStatus(meal._id);
-  }
-});
+  Meteor.methods({
+	createMeal: function(meal){
+	  meal = meal || {};
+	  if(!meal.host)
+	  {
+		meal.host = this.userId;
+	  }
+	  if(!Meals.validateMeal(meal))
+	  {
+		console.log("Error in createMeal: invalid meal " + JSON.stringify(meal));
+		throw new Meteor.Error(400, "Invalid meal");
+	  }
+	  meal.min_guests = meal.min_guests || 0;
+	  meal_id = Meals.insert(meal);
+	  Meals.updateStatus(meal_id);
+	  return meal_id;
+	},
+	updateMeal: function(meal){ //TODO should combine this with createMeal
+	  meal = meal || {};
+	  if(!meal.host)
+	  {
+		meal.host = this.userId;
+	  }
+	  if(!Meals.validateMeal(meal) || !meal._id)
+	  {
+		console.log("Error in updateMeal: invalid meal " + JSON.stringify(meal));
+		throw new Meteor.Error(400, "Invalid meal");
+	  }
+	  meal.min_guests = meal.min_guests || 0;
+	  Meals.update(meal._id, meal);
+	  Meals.updateStatus(meal._id);
+	}
+  });
+}

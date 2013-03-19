@@ -14,7 +14,6 @@ if (Meteor.isClient) {
         description: Template.mealDetails.event().title,
         panelLabel: 'Enter payment information',
         token: function(res) { 
-          alert(JSON.stringify(res)); 
           Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes",res.id);
         } //TODO implement a real callback
       });
