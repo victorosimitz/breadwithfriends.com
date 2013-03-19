@@ -52,7 +52,6 @@ Meals.updateStatus = function(event_id)
 {
   evt = Meals.findOne(event_id);
   if(!evt) return null;
-  console.log(JSON.stringify(evt));
   old_status = evt.status;
   new_status = null;
   confirmed_invites = Invitations.countInvites(event_id,"yes");
@@ -77,7 +76,7 @@ Meals.updateStatus = function(event_id)
     //TODO call to payment logic here
     console.log("Just switched from WAITING to " + new_status + ". May need to charge a bunch of people");
   }
-  console.log(old_status + " " + new_status + " " + confirmed_invites + " " + evt.min_guests + " " + evt.max_guests);
+  //console.log(old_status + " " + new_status + " " + confirmed_invites + " " + evt.min_guests + " " + evt.max_guests);
   if(!new_status) new_status = old_status; //this is pretty weird but let's handle it gracefully
   Meals.update(event_id,{$set:{status:new_status}});
   return new_status;
