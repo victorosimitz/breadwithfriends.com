@@ -11,7 +11,9 @@
   <label for="city">City:</label><input type="text" id="city" value="{{get_event.location.city}}"/>
   <label for="state">State:</label><input type="text" id="state" value="{{get_event.location.state}}"/>
   <label for="zip">Zip Code:</label><input type="text" id="zip" value="{{get_event.location.zip}}"/>
-  <label for="price">Price:</label><input type="text" id="price" value="{{price}}"/>
-  <div id="q_public"><input type="checkbox" id="public" {{#if get_event.public}}checked{{/if}}/><label for="public">Open to the public.</label></div>
-  <input type="button" id="create-or-update-event" value="{{#if creatingNewEvent}}Create Event{{else}}Update Event{{/if}}"/>&nbsp;<span id="cancel" class="clickable">Cancel</span>
+  <label for="price">Price:</label><input type="text" id="price" value="{{price}}"/>'
+  <div id="control">
+    <input type="button" id="create-or-update-event" value="{{#if creatingNewEvent}}Create Event{{else}}Update Event{{/if}}"/>
+    &nbsp;<span id="cancel" class="clickable">Cancel</span>
+  </div>
 </template>

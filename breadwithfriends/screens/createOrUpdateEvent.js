@@ -22,8 +22,7 @@ if (Meteor.isClient) {
                  city: "Stanford",
                  state: "CA",
                  zip: "94305"},
-               price: 1295,
-               public: true};
+               price: 1295};
     }
   };
   
@@ -54,7 +53,6 @@ if (Meteor.isClient) {
       meal.location.state = document.getElementById("state").value.trim();
       meal.location.zip = document.getElementById("zip").value.trim();
       meal.price = Math.round(100 * parseFloat(document.getElementById("price").value.trim())); //store as pennies
-      meal.public = document.getElementById("public").checked;
       if(!UserDetails.findOne({user_id:this.userId}))  //TODO do we still need this?
         Meteor.call("createUserDetails",{});
       if(!meal._id)

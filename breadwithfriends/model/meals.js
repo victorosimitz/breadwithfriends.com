@@ -5,9 +5,6 @@
   location: e.g. {address: "47 Olmsted Rd", city: "Stanford", state: "CA", zip: "94305"},
   price: the price in USD of the meal, per person
   host: user id of the host,
-  guests: array of user ids of the guests who are attending this meal,
-  public: Boolean,
-  invites: array of user ids of all guests who are specifically invited to this meal
 */
 
 //TODO add image
@@ -36,8 +33,7 @@ Meals.validateMeal = function(options)
       && typeof options.location.state === "string" && options.location.state.length == 2
       && typeof options.location.zip === "string" && options.location.zip.length == 5
       && typeof options.price === "number" && options.price >= 0
-      && options.host
-      && typeof options.public === "boolean")){
+      && options.host)){
     return false;
   }
   return true;
