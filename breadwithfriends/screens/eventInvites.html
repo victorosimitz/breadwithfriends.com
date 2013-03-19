@@ -1,6 +1,6 @@
 <template name="eventInvitesScreen">
   <h3>Manage Invitations: <span id="show_event" class="clickable">{{get_event.title}}</span></h3>
-  <!--<p>X invites sent, Y people attending, Z people haven't responded yet</p>-->
+  <p>{{number_sent}} invites sent, {{number_yes}} people attending, {{number_waiting}} people haven't responded yet</p>
   <table>
     <tr>
       <th>Person</th>

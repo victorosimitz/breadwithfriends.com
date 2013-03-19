@@ -18,6 +18,24 @@ if(Meteor.isClient)
     return Invitations.find({event:evt_id});
   };
   
+  Template.eventInvitesScreen.number_sent = function()
+  {
+    return Invitations.countInvites(Session.get("showScreen").event_id);
+  };
+  
+  Template.eventInvitesScreen.number_yes = function()
+  {
+    return Invitations.countInvites(Session.get("showScreen").event_id,"yes");
+  };
+  
+  Template.eventInvitesScreen.number_waiting = function()
+  {
+    sent = Invitations.countInvites(Session.get("showScreen").event_id);
+    yes = Invitations.countInvites(Session.get("showScreen").event_id,"yes");
+    no = Invitations.countInvites(Session.get("showScreen").event_id,"no");
+    return sent - yes - no;
+  };
+  
   Template.eventInvitesScreen.events({
     'click #add_invite': function()
     {

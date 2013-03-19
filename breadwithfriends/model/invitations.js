@@ -62,6 +62,21 @@ Invitations.lookup = function(user_id,event_id)
   return invitation; //may still be null
 };
 
+/* Count the invites to a particular event.
+   If rsvp is specified we count only the invites
+   with a particular rsvp ("yes" or "no"), otherwise
+   we count all invites for that event.
+*/
+Invitations.countInvites = function(event_id, rsvp)
+{
+  c = null;
+  if(!rsvp)
+    c = Invitations.find({event:event_id});
+  else
+    c = Invitations.find({event:event_id,response:rsvp});
+  return c.count();
+};
+
 Meteor.methods({
   createInvitations: function(invite_set){ //right now we assume users are invited by email address
     invite_set.inviting_user = invite_set.inviting_user || this.userId;
