@@ -1,20 +1,30 @@
 <template name="mealDetails">
-  <h3>Meal Details: {{title}}</h3>
+  <h3>Event Details: {{title}}</h3>
   <p>{{price}}</p>
   <p>{{description}}</p>
   <p>Hosted by {{host}}, {{time}}</p>
   <p>{{city}}, {{state}} {{zip}}</p>
   {{#if inThePast}}
-    <p class="past">This meal has already taken place!</p>
-    <p><span class="cancel clickable">View Other Meals</span></p>
+    <p class="past">This event has already taken place!</p>
+    <p><span class="cancel clickable">View Other Events</span></p>
   {{else}}
-	{{#if currentlyReserved}}
-	  <p>You have signed up for this meal!</p>
-	  <p><input type="button" id="cancelMeal" value="Cancel Reservation"/></p>
-	  <p><span class="cancel clickable">View Other Meals</span></p>
+	{{#if invitation}}
+	  <p>You are invited to this event!</p>
+	  <p>Will you attend? <span id="yes_rsvp" class="clickable {{yes_rsvp_chosen}}">Yes</span> | <span id="no_rsvp" class="clickable {{no_rsvp_chosen}}">No</span></p>
 	{{else}}
-	  <input type="button" id="reserveMeal" value="Reserve a Spot!"/>
-	  <span class="cancel clickable">No, thanks</span>
+	  <p>Sorry, this event is private! Contact {{host}} for an invitation.</p>
 	{{/if}}
+  {{/if}}
+  <p><span class="cancel clickable">View Other Meals</span></p>
+</template>
+
+<template name="reservation_OLD">
+  {{#if currentlyReserved}}
+	<p>You have signed up for this meal!</p>
+	<p><input type="button" id="cancelMeal" value="Cancel Reservation"/></p>
+	<p><span class="cancel clickable">View Other Meals</span></p>
+  {{else}}
+	<input type="button" id="reserveMeal" value="Reserve a Spot!"/>
+	<span class="cancel clickable">No, thanks</span>
   {{/if}}
 </template>

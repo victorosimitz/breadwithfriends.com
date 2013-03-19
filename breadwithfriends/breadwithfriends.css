@@ -33,6 +33,10 @@
   cursor:pointer;
 }
 
+.chosen{
+  font-weight: bold;
+  border: 1px;
+}
 
 /* Meals Near Me screen */
 .past {

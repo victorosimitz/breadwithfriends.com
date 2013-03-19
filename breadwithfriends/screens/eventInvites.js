@@ -45,7 +45,7 @@ if(Meteor.isClient)
   
   Template.invite.rsvp = function()
   {
-    if(this.response) return response;
+    if(this.response) return this.response;
     else return "";
   };
 }

@@ -2,11 +2,17 @@ if (Meteor.isClient) {
 
   Template.mealDetails.events({
     'click .cancel' : function() { switchToMyEventsScreen(); },
-    'click #reserveMeal' : function() { 
+    'click #yes_rsvp' : function() {
+      Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes");
+    },
+    'click #no_rsvp' : function() {
+      Meteor.call("rsvp",Template.mealDetails.invitation()._id,"no");
+    },
+    'click #reserveMeal' : function() {    //DEPRECATED
       //Meteor.call("res_markReserved",Session.get("showScreen").meal_id);
       switchToReserveMealScreen(Session.get("showScreen").meal_id);
     },
-    'click #cancelMeal' : function() { 
+    'click #cancelMeal' : function() {    //DEPRECATED
       Meteor.call("res_markCanceled",Session.get("showScreen").meal_id);
     }
   });
@@ -71,7 +77,28 @@ if (Meteor.isClient) {
   {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     return meal.time <= Session.get("server_time");
-  }
+  };
+  
+  Template.mealDetails.invitation = function()
+  {
+    return Invitations.lookup(Meteor.userId(), Session.get("showScreen").meal_id);
+  };
+  
+  Template.mealDetails.yes_rsvp_chosen = function()
+  {
+    i = Template.mealDetails.invitation();
+    if(i.response && i.response == "yes")
+      return "chosen";
+    return "";
+  };
+  
+  Template.mealDetails.no_rsvp_chosen = function()
+  {
+    i = Template.mealDetails.invitation();
+    if(i.response && i.response == "no")
+      return "chosen";
+    return "";
+  };
 
   Template.mealDetails.canSignUp = function()
   {

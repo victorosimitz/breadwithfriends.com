@@ -33,9 +33,32 @@ Invitations.validateInvitation = function(invitation)
     return false; //invited user not specified
   if(!invitation.invited_user.email && !invitation.invited_user.uid)
     return false; //invited user is specified but not valid
-  if(invitation.response && invitation.response != "yes" && invitation.response != "no")
+  if(invitation.response && !Invitations.validateResponse())
     return false; //invitation response is set, but invalid
   return true; //must be good to go if we get this far
+};
+
+Invitations.validateResponse = function(response)
+{
+  if(response == "yes" || response == "no")
+    return true;
+  else
+    return false;
+}
+
+Invitations.lookup = function(user_id,event_id)
+{
+  //since invitations are stored against email address we need to find all known email
+  //addresses for this user
+  emails = getUserEmails(user_id);
+  invitation = null;
+  i = 0;
+  while(!invitation && i < emails.length)
+  {
+    invitation = Invitations.findOne({event:event_id,"invited_user.email":emails[i]});
+    i++;
+  }
+  return invitation; //may still be null
 };
 
 Meteor.methods({
@@ -61,5 +84,13 @@ Meteor.methods({
       throw new Meteor.Error(400, "Invalid invitation");
     }
     Invitations.insert(invitation);
+  },
+  rsvp: function(invitation_id, rsvp){
+    if(!Invitations.validateResponse(rsvp))
+    {
+      console.log("Invalid RSVP: " + rsvp);
+      throw new Meteor.Error(400, "Invalid RSVP");
+    }
+    Invitations.update(invitation_id,{$set:{response:rsvp}});
   }
 });
