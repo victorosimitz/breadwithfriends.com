@@ -1,6 +1,9 @@
 if (Meteor.isClient) {
 
   Template.mealDetails.events({
+    'click #show-invites' : function() { 
+      switchToEventInvitesScreen(Session.get("showScreen").meal_id);
+    },
     'click .cancel' : function() { switchToMyEventsScreen(); },
     'click #yes_rsvp' : function() {
       Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes");
@@ -41,6 +44,13 @@ if (Meteor.isClient) {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     if(!meal) return undefined;
     return getUserShortName(meal.host);
+  };
+  
+  Template.mealDetails.iAmTheHost = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    if(!meal) return false; //we have bigger problems if this happens
+    return meal.host == Meteor.userId();
   };
   
   Template.mealDetails.time = function()

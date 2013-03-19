@@ -8,11 +8,16 @@
     <p class="past">This event has already taken place!</p>
     <p><span class="cancel clickable">View Other Events</span></p>
   {{else}}
-	{{#if invitation}}
-	  <p>You are invited to this event!</p>
-	  <p>Will you attend? <span id="yes_rsvp" class="clickable {{yes_rsvp_chosen}}">Yes</span> | <span id="no_rsvp" class="clickable {{no_rsvp_chosen}}">No</span></p>
-	{{else}}
-	  <p>Sorry, this event is private! Contact {{host}} for an invitation.</p>
+    {{#if iAmTheHost}}
+      <p>You are hosting this event!</p>
+      <p><span id="show-invites" class="clickable">Manage Invitations</span></p>
+    {{else}}
+	  {{#if invitation}}
+		<p>You are invited to this event!</p>
+		<p>Will you attend? <span id="yes_rsvp" class="clickable {{yes_rsvp_chosen}}">Yes</span> | <span id="no_rsvp" class="clickable {{no_rsvp_chosen}}">No</span></p>
+	  {{else}}
+		<p>Sorry, this event is private! Contact {{host}} for an invitation.</p>
+	  {{/if}}
 	{{/if}}
   {{/if}}
   <p><span class="cancel clickable">View Other Meals</span></p>
