@@ -12,6 +12,8 @@
   <label for="state">State:</label><input type="text" id="state" value="{{get_event.location.state}}"/>
   <label for="zip">Zip Code:</label><input type="text" id="zip" value="{{get_event.location.zip}}"/>
   <label for="price">Price:</label><input type="text" id="price" value="{{price}}"/>'
+  <label for="min_guests">Minimum Number of Guests:</label><input type="text" id="min_guests" value="{{min_guests}}"/>
+  <label for="max_guests">Maximum Number of Guests:</label><input type="text" id="max_guests" value="{{max_guests}}"/>
   <div id="control">
     <input type="button" id="create-or-update-event" value="{{#if creatingNewEvent}}Create Event{{else}}Update Event{{/if}}"/>
     &nbsp;<span id="cancel" class="clickable">Cancel</span>

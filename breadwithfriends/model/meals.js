@@ -5,6 +5,8 @@
   location: e.g. {address: "47 Olmsted Rd", city: "Stanford", state: "CA", zip: "94305"},
   price: the price in USD of the meal, per person
   host: user id of the host,
+  min_guests: the event only occurs if at least this many people sign up
+  max_guests: maximum number of people that can sign up
 */
 
 //TODO add image
@@ -40,20 +42,19 @@ Meals.validateMeal = function(options)
 }
 
 Meteor.methods({
-  createMeal: function(options){
-    options = options || {};
-    if(!options.host)
+  createMeal: function(meal){
+    meal = meal || {};
+    if(!meal.host)
     {
-      options.host = this.userId;
+      meal.host = this.userId;
     }
-    if(!Meals.validateMeal(options))
+    if(!Meals.validateMeal(meal))
     {
-      console.log("Error in createMeal: invalid meal " + JSON.stringify(options));
+      console.log("Error in createMeal: invalid meal " + JSON.stringify(meal));
       throw new Meteor.Error(400, "Invalid meal");
     }
-    options.guests = options.guests || {};
-    options.invites = options.invites || {};
-    return Meals.insert(options);
+    meal.min_guests = meal.min_guests || 0;
+    return Meals.insert(meal);
   },
   updateMeal: function(meal){ //TODO should combine this with createMeal
     meal = meal || {};
@@ -66,6 +67,7 @@ Meteor.methods({
       console.log("Error in updateMeal: invalid meal " + JSON.stringify(meal));
       throw new Meteor.Error(400, "Invalid meal");
     }
+    meal.min_guests = meal.min_guests || 0;
     Meals.update(meal._id, meal);
   }
 });

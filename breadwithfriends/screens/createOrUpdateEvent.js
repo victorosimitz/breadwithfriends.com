@@ -37,6 +37,20 @@ if (Meteor.isClient) {
     evt = Template.createOrUpdateEventScreen.get_event();
     return formatPrice(evt.price,true/*number*/)
   };
+  
+  Template.createOrUpdateEventScreen.min_guests = function()
+  {
+    evt = Template.createOrUpdateEventScreen.get_event();
+    if(evt.min_guests) return evt.min_guests;
+    else return "";
+  };
+  
+  Template.createOrUpdateEventScreen.max_guests = function()
+  {
+    evt = Template.createOrUpdateEventScreen.get_event();
+    if(evt.max_guests) return evt.max_guests;
+    else return "";
+  };
 
   Template.createOrUpdateEventScreen.events({
     'click #create-or-update-event' : function()
@@ -53,6 +67,12 @@ if (Meteor.isClient) {
       meal.location.state = document.getElementById("state").value.trim();
       meal.location.zip = document.getElementById("zip").value.trim();
       meal.price = Math.round(100 * parseFloat(document.getElementById("price").value.trim())); //store as pennies
+      min_guests = parseInt(document.getElementById("min_guests").value.trim());
+      if(min_guests >= 0) //must be set and nonnegative, otherwise just ignore it
+        meal.min_guests = min_guests;
+      max_guests = parseInt(document.getElementById("max_guests").value.trim());
+      if(max_guests >= 0) //not sure what it means if this is zero but we'll allow it for now
+        meal.max_guests = max_guests;
       if(!UserDetails.findOne({user_id:this.userId}))  //TODO do we still need this?
         Meteor.call("createUserDetails",{});
       if(!meal._id)
