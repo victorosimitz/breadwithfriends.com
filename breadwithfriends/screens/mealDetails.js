@@ -19,6 +19,12 @@ if (Meteor.isClient) {
       Meteor.call("res_markCanceled",Session.get("showScreen").meal_id);
     }
   });
+  
+  Template.mealDetails.event = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal;
+  }
  
   Template.mealDetails.title = function()
   {
@@ -81,6 +87,23 @@ if (Meteor.isClient) {
   {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     return meal && meal.location.zip;
+  };
+  
+  Template.mealDetails.min_guests = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.min_guests && meal.min_guests > 0 ? meal.min_guests : "no minimum";
+  };
+  
+  Template.mealDetails.max_guests = function()
+  {
+    meal = Meals.findOne(Session.get("showScreen").meal_id);
+    return meal && meal.max_guests && meal.max_guests > 0 ? meal.max_guests : "no maximum";
+  };
+  
+  Template.mealDetails.confirmed_guests = function()
+  {
+    return Invitations.countInvites(Session.get("showScreen").meal_id,"yes");
   };
   
   Template.mealDetails.inThePast = function()
