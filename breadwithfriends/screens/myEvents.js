@@ -48,6 +48,16 @@ if (Meteor.isClient) {
     return this.time <= Session.get("server_time") ? "past" : "";
   };
   
+  Template.meal.show = function()
+  {
+    if(adminUser()) return true; //TODO admin users should be able to disable show-all mode
+    if(Meteor.userId() == this.host)
+      return true; //this user created this event
+    if(Invitations.lookup(Meteor.userId(),this._id))
+      return true; //this user is invited to this event
+    return false; //it's none of this user's business!
+  };
+  
   Template.meal.canEdit = function()
   {
     if(adminUser()) return true; //admins can edit anything

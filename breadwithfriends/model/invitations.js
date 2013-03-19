@@ -50,7 +50,8 @@ Invitations.lookup = function(user_id,event_id)
 {
   //since invitations are stored against email address we need to find all known email
   //addresses for this user
-  emails = getUserEmails(user_id);
+  emails = getUserEmails(user_id) || [];
+  //console.log(emails);
   invitation = null;
   i = 0;
   while(!invitation && i < emails.length)

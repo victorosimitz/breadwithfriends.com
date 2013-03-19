@@ -72,7 +72,8 @@ var getUserEmails = function(user_id)
   if(u && u.emails)
   {
     for(i in u.emails)
-      emails.push(u.emails[i]);
+      if(u.emails[i].address)
+        emails.push(u.emails[i].address);
   }
   if(u && u.services && u.services.facebook && u.services.facebook.email)
     emails.push(u.services.facebook.email);
