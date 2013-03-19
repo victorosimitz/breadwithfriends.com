@@ -1,6 +1,7 @@
 if (Meteor.isClient) {
   Meteor.startup(function(){
     Meteor.subscribe("allUserData"); 
+    jQuery.getScript("https://checkout.stripe.com/v2/checkout.js");
   });
 }
 
