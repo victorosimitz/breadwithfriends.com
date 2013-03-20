@@ -134,7 +134,7 @@ if (Meteor.isClient) {
     return Invitations.lookup(Meteor.userId(), Session.get("showScreen").meal_id);
   };
   
-  Template.mealDetails.yes_rsvp_chosen = function()
+  Template.mealDetails.yes_rsvp_chosen = function() //deprecated
   {
     i = Template.mealDetails.invitation();
     if(i.response && i.response == "yes")
@@ -142,11 +142,27 @@ if (Meteor.isClient) {
     return "";
   };
   
-  Template.mealDetails.no_rsvp_chosen = function()
+  Template.mealDetails.no_rsvp_chosen = function() //deprecated
   {
     i = Template.mealDetails.invitation();
     if(i.response && i.response == "no")
       return "chosen";
+    return "";
+  };
+  
+  Template.mealDetails.yes_rsvp_active = function()
+  {
+    i = Template.mealDetails.invitation();
+    if(i.response && i.response == "yes")
+      return "active";
+    return "";
+  };
+  
+  Template.mealDetails.no_rsvp_active = function()
+  {
+    i = Template.mealDetails.invitation();
+    if(i.response && i.response == "no")
+      return "active";
     return "";
   };
 

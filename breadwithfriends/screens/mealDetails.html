@@ -1,39 +1,75 @@
 <template name="mealDetails">
-  <h3>Event Details: {{title}}</h3>
-  <p>{{price}}</p>
-  <p>{{description}}</p>
-  <p>Hosted by {{host}}, {{time}}</p>
-  <p>{{city}}, {{state}} {{zip}}</p>
-  <p>Status: <strong>{{status}}</strong></p>
-  <p>Minimum guests: {{min_guests}}<br/>
-     Maximum guests: {{max_guests}}<br/>
-     Confirmed guests: {{confirmed_guests}}</p>
-  {{#if inThePast}}
-    <p class="past">This event has already taken place!</p>
-    <p><span class="cancel clickable">View Other Events</span></p>
-  {{else}}
+  <div class="row">
+    <h3>{{title}} <small>Event Details</small></h3>
+  </div>
+  <div class="row">
+    {{#if inThePast}}
+      <div class="alert alert-error">This event has already taken place!</div>
+    {{/if}}
+    {{#unless iAmTheHost}}
+      {{#unless invitation}}
+        <div class="alert alert-error">Sorry, this event is private! Contact {{host}} for an invitation.</div>
+      {{/unless}}
+    {{/unless}}
+  </div>
+  <div class="row">
+    <div class="span4">
+      <table class="table table-bordered">
+		<tr>
+		  <td colspan="2">
+			<p class="lead">{{description}}</p>
+		  </td>
+		</tr>
+		<tr>
+		  <th>Time</th>
+		  <td>{{time}}</td>
+		</tr>
+		<tr>
+		  <th>Location</th>
+		  <td>{{city}}, {{state}} {{zip}}</td>
+		</tr>
+		<tr>
+		  <th>Host</th>
+		  <td>{{host}}</th>
+		</tr>
+		<tr>
+		  <th>Price</th>
+		  <td>{{price}}</td>
+		</tr>
+		<tr>
+		  <th>Status</th>
+		  <td>{{status}}</td>
+		</tr>
+		<tr>
+		  <th>Min guests</th>
+		  <td>{{min_guests}}</td>
+		</tr>
+		<tr>
+		  <th>Max guests</th>
+		  <td>{{max_guests}}</td>
+		</tr>
+		<tr>
+		  <th>Confirmed guests</th>
+		  <td>{{confirmed_guests}}</td>
+		</tr>
+		{{#if invitation}}
+		<tr>
+		  <th>Your RSVP</th>
+		  <td>
+		    <div class="btn-group" data-toggle="buttons-radio">
+		      <button type="button" class="btn {{yes_rsvp_active}}" id="yes_rsvp">Yes</button>
+		      <button type="button" class="btn {{no_rsvp_active}}" id="no_rsvp">No</button>
+		    </div>
+		  </td>
+		  <!--<td><span id="yes_rsvp" class="clickable {{yes_rsvp_chosen}}">Yes</span> | <span id="no_rsvp" class="clickable {{no_rsvp_chosen}}">No</span></td> -->
+		</tr>
+		{{/if}}
+	  </table>
+	</div>
+  </div>
     {{#if iAmTheHost}}
       <p>You are hosting this event!</p>
       <p><span id="show-invites" class="clickable">Manage Invitations</span></p>
-    {{else}}
-	  {{#if invitation}}
-		<p>You are invited to this event!</p>
-		<p>Will you attend? <span id="yes_rsvp" class="clickable {{yes_rsvp_chosen}}">Yes</span> | <span id="no_rsvp" class="clickable {{no_rsvp_chosen}}">No</span></p>
-	  {{else}}
-		<p>Sorry, this event is private! Contact {{host}} for an invitation.</p>
-	  {{/if}}
 	{{/if}}
-  {{/if}}
-  <p><span class="cancel clickable">View Other Meals</span></p>
-</template>
-
-<template name="reservation_OLD">
-  {{#if currentlyReserved}}
-	<p>You have signed up for this meal!</p>
-	<p><input type="button" id="cancelMeal" value="Cancel Reservation"/></p>
-	<p><span class="cancel clickable">View Other Meals</span></p>
-  {{else}}
-	<input type="button" id="reserveMeal" value="Reserve a Spot!"/>
-	<span class="cancel clickable">No, thanks</span>
-  {{/if}}
+  <p><button class="cancel btn btn-primary">View Other Meals</button></p>
 </template>
