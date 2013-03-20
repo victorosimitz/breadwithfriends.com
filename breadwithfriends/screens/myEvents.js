@@ -18,7 +18,7 @@ if (Meteor.isClient) {
   });
 
   Template.meal.events({
-    'click .show-meal-details' : function() {
+    'click #show-meal-details' : function() {
       switchToMealDetailsScreen(this._id);
     },
     'click .manage-invites' : function() {

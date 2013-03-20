@@ -10,21 +10,22 @@
     {{> meal}}
   {{/each}}
   </ul>
-  <input type="button" id="create-meal" value="Create New Event"/>
+  <button type="button" id="create-meal" class="btn btn-primary btn-large">Create New Event</button>
 </template>
 
 <template name="meal">
  {{#if show}}
    <li class="span4 event {{past}}">
      <div class="thumbnail">
-	   <div class="title">{{title}}</div>
-	   <div class="description">{{description}}</div>
+	   <div class="title"><a href="#" id="show-meal-details">{{title}}</a></div>
 	   <div class="info">{{time}}, {{price}}</div>
 	   <div class="controls">
-		 [<span class="show-meal-details clickable">details</span>{{#if canEdit}} | <span
-		 class="manage-invites clickable">invites</span> |
-		 <span class="edit-meal clickable">edit</span> | 
-		 <span class="delete-meal clickable">delete</span>{{/if}}]
+		 {{#if canEdit}}
+		   <span class="manage-invites clickable"><i class="icon-user"></i></span> 
+		   <span class="edit-meal clickable"><i class="icon-pencil"></i></span> 
+		   <span class="delete-meal clickable"><i class="icon-remove"></i></span>
+		 {{/if}}
+		 &nbsp;
 	   </div>
 	 </div>
    </li>

@@ -6,17 +6,24 @@ if (Meteor.isClient) {
     },
     'click .cancel' : function() { switchToMyEventsScreen(); },
     'click #yes_rsvp' : function() {
-      StripeCheckout.open({
-        key: 'pk_test_LY4crE00znRKpy6FvQW0SMaQ',   //TODO stripe public key should go in Session
-        address: false,
-        amount: Template.mealDetails.event().price,
-        name: "BreadWithFriends",
-        description: Template.mealDetails.event().title,
-        panelLabel: 'Enter payment information',
-        token: function(res) { 
-          Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes",res.id);
-        } //TODO implement a real callback
-      });
+      if(Template.mealDetails.event().price > 0) //don't bother with stripe if it's a free event
+      {
+		StripeCheckout.open({
+		  key: 'pk_test_LY4crE00znRKpy6FvQW0SMaQ',   //TODO stripe public key should go in Session
+		  address: false,
+		  amount: Template.mealDetails.event().price,
+		  name: "BreadWithFriends",
+		  description: Template.mealDetails.event().title,
+		  panelLabel: 'Enter payment information',
+		  token: function(res) { 
+			Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes",res.id);
+		  } //TODO implement a real callback
+		});
+      }
+      else
+      {
+        Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes",res.id);
+      }
     },
     'click #no_rsvp' : function() {
       Meteor.call("rsvp",Template.mealDetails.invitation()._id,"no");
@@ -103,7 +110,8 @@ if (Meteor.isClient) {
   {
     meal = Meals.findOne(Session.get("showScreen").meal_id);
     if(meal.status) return meal.status;
-    else return JSON.stringify(meal);
+    else return "";
+    //else return JSON.stringify(meal);
   };
   
   Template.mealDetails.min_guests = function()
