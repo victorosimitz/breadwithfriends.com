@@ -1,7 +1,7 @@
 <template name="myEvents">
   <h3>My Events</h3>
-  <ul>
   <!-- First the upcoming events -->
+  <ul id="events">
   {{#each meals_upcoming}}
     {{> meal}}
   {{/each}}
@@ -15,11 +15,16 @@
 
 <template name="meal">
  {{#if show}}
-   <li class="{{past}}">{{title}}: {{description}}, at {{time}} ({{price}}) 
-	 [<span class="show-meal-details clickable">details</span>{{#if canEdit}} | <span
-	 class="manage-invites clickable">invites</span> |
-	 <span class="edit-meal clickable">edit</span> | 
-	 <span class="delete-meal clickable">delete</span>{{/if}}]
+   <li class="event {{past}}">
+     <div class="title">{{title}}</div>
+     <div class="description">{{description}}</div>
+     <div class="info">{{time}}, {{price}}</div>
+     <div class="controls">
+	   [<span class="show-meal-details clickable">details</span>{{#if canEdit}} | <span
+	   class="manage-invites clickable">invites</span> |
+	   <span class="edit-meal clickable">edit</span> | 
+	   <span class="delete-meal clickable">delete</span>{{/if}}]
+	 </div>
    </li>
  {{/if}}
 </template>

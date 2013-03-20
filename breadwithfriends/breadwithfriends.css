@@ -38,7 +38,22 @@
   border: 1px;
 }
 
-/* Meals Near Me screen */
+/* My Events screen */
+#events {
+  display: inline;
+}
+.event{
+  text-align: center;
+  border: 1px dotted;
+  width: 300px;
+  margin: 5px;
+  padding: 2px;
+}
+
+.event .title{
+  font-weight: bold;
+}
+
 .past {
   font-style:italic;
 }
