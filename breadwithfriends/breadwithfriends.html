@@ -3,7 +3,15 @@
 </head>
 
 <body>
-  {{> page}}
+  {{#if currentUser}}
+	<div class="row">
+	  <div class="span4"><h2>BreadWithFriends</h2></div>
+	  <div id="login" class="span2 offset10">{{loginButtons align="right"}}</div>
+	</div>
+	{{> page}}
+  {{else}}
+	{{> splash}}
+  {{/if}} 
 </body>
 
 <!-- 
@@ -11,29 +19,24 @@
 -->
 
 <template name="page">
-  <div id="login">{{loginButtons align="right"}}</div>
   <div id="main">
     {{#if message}}
       <div id="message">{{message}}</div>
     {{/if}}
-    {{#if currentUser}}
-      {{#if showMyEventsScreen}}
-        {{> myEvents}}
-      {{/if}}
-      {{#if showMealDetailsScreen}}
-        {{> mealDetails}}
-      {{/if}}
-      {{#if showReserveMealScreen}}
-        {{> reserveMeal}}
-      {{/if}}
-      {{#if showCreateOrUpdateEventScreen}}
-        {{> createOrUpdateEventScreen}}
-      {{/if}}
-      {{#if showEventInvitesScreen}}
-        {{> eventInvitesScreen }}
-      {{/if}}
-    {{else}}
-      {{> splash}}
-    {{/if}} 
+	{{#if showMyEventsScreen}}
+	  {{> myEvents}}
+	{{/if}}
+	{{#if showMealDetailsScreen}}
+	  {{> mealDetails}}
+	{{/if}}
+	{{#if showReserveMealScreen}}
+	  {{> reserveMeal}}
+	{{/if}}
+	{{#if showCreateOrUpdateEventScreen}}
+	  {{> createOrUpdateEventScreen}}
+	{{/if}}
+	{{#if showEventInvitesScreen}}
+	  {{> eventInvitesScreen }}
+	{{/if}}
   </div>
 </template>

@@ -1,11 +1,10 @@
 
 #login {
-  margin: 5px;
   text-align: right;
 }
 
 #main {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 #message { 
@@ -45,7 +44,7 @@
 
 .event{
   text-align: center;
-  border: 1px dotted;
+  /*border: 1px dotted;*/
   margin: 5px;
   padding: 10px;
 }
