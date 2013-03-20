@@ -23,7 +23,7 @@
 <template name="page">
   <div id="main">
     {{#if message}}
-      <div id="message">{{message}}</div>
+      <div class="alert alert-success">{{message}}<a href="#" class="close" data-dismiss="alert">&times;</a></div>
     {{/if}}
 	{{#if showMyEventsScreen}}
 	  {{> myEvents}}
