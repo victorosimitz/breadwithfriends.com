@@ -56,3 +56,9 @@
 .past {
   font-style:italic;
 }
+
+/* Manage Invitations screen */
+.summary_stat {
+  font-size: x-large;
+  font-weight: bold;
+}

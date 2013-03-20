@@ -37,14 +37,17 @@ if(Meteor.isClient)
   };
   
   Template.eventInvitesScreen.events({
-    'click #add_invite': function()
+    'keypress #new_invite': function(event)
     {
-      email = document.getElementById("new_invite").value.trim();
-      evt_id = Session.get("showScreen").event_id;
-      invite = {event:evt_id,invited_user:{email:email}};
-      Meteor.call("createInvitation",invite,function(error, result){
-        if(!error) document.getElementById("new_invite").value="";
-      });
+      if(event.which==13) //return
+      {
+		email = document.getElementById("new_invite").value.trim();
+		evt_id = Session.get("showScreen").event_id;
+		invite = {event:evt_id,invited_user:{email:email}};
+		Meteor.call("createInvitation",invite,function(error, result){
+		  if(!error) document.getElementById("new_invite").value="";
+		});
+      }
     },
     'click #show_event': function()
     {
@@ -66,4 +69,11 @@ if(Meteor.isClient)
     if(this.response) return this.response;
     else return "";
   };
+  
+  Template.invite.events({
+    'click #remove' : function()
+    { 
+      Invitations.remove(this._id);
+    }
+  });
 }
