@@ -4,11 +4,13 @@
 
 <body>
   {{#if currentUser}}
-	<div class="row">
-	  <div class="span4"><h2>BreadWithFriends</h2></div>
-	  <div id="login" class="span2 offset10">{{loginButtons align="right"}}</div>
+    <div class="container">
+	  <div class="row-fluid">
+		<div class="span4"><h2>BreadWithFriends</h2></div>
+		<div id="login" class="span2 offset6">{{loginButtons align="right"}}</div>
+	  </div>
+	  {{> page}}
 	</div>
-	{{> page}}
   {{else}}
 	{{> splash}}
   {{/if}} 
