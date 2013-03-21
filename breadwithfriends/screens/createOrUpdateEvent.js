@@ -14,6 +14,7 @@ if (Meteor.isClient) {
     }
     else
     {
+      free = Template.createOrUpdateEventScreen.mustBeFree();
       return {title:"Skiers' Dinner",
               description:"Eat with fellow skiers",
               time:"Apr 1, 2013 7:30 pm",
@@ -22,8 +23,13 @@ if (Meteor.isClient) {
                  city: "Stanford",
                  state: "CA",
                  zip: "94305"},
-               price: 1295};
+               price: free ? 0 : 1295};
     }
+  };
+  
+  Template.createOrUpdateEventScreen.mustBeFree = function()
+  {
+    return !adminUser();
   };
   
   Template.createOrUpdateEventScreen.time = function()
