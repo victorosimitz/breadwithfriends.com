@@ -79,8 +79,6 @@ if (Meteor.isClient) {
       max_guests = parseInt(document.getElementById("max_guests").value.trim());
       if(max_guests >= 0) //not sure what it means if this is zero but we'll allow it for now
         meal.max_guests = max_guests;
-      if(!UserDetails.findOne({user_id:this.userId}))  //TODO do we still need this?
-        Meteor.call("createUserDetails",{});
       if(!meal._id)
       {
 		Meteor.call("createMeal", meal);
