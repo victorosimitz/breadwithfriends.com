@@ -10,12 +10,11 @@
     {{> meal}}
   {{/each}}
   </ul>
-  <button type="button" id="create-meal" class="btn btn-primary btn-large">Create New Event</button>
 </template>
 
 <template name="meal">
  {{#if show}}
-   <li class="span4 event {{past}}">
+   <li class="span3 event {{past}}">
      <div class="thumbnail">
 	   <div class="title"><a href="#" id="show-meal-details">{{title}}</a></div>
 	   <div class="info">{{time}}, {{price}}</div>

@@ -23,8 +23,8 @@
   height: 500px;
 } 
 
-#tagline {
-  font-weight: bold;
+#header {
+  margin-left: 20px;
 }
 
 .clickable:hover{

@@ -4,17 +4,40 @@
 
 <body>
   {{#if currentUser}}
-    <div class="container">
-	  <div class="row-fluid">
-		<div class="span4"><h2>BreadWithFriends</h2></div>
-		<div id="login" class="span2 offset6">{{loginButtons align="right"}}</div>
+	<div class="row" id="">
+      {{> header}}
+	</div>
+	<div class="row">
+      <div class="container">
+	    {{> page}}
 	  </div>
-	  {{> page}}
 	</div>
   {{else}}
 	{{> splash}}
   {{/if}} 
 </body>
+
+<template name="header">
+  <div class="navbar" id="header">
+	<div class="navbar-inner">
+	  <a class="brand" href="#">BreadWithFriends</a>
+	  <ul class="nav">
+		<li class=""><a id="navbar_myEvents" href="#">My Events</a></li>
+		<li><a href="#" id="navbar_createEvent">Create New Event</a></li>
+		<!--<li><a id="navbar_settings">Settings</a></li>-->
+	  </ul>
+	  <div id="login" class="pull-right">{{loginButtons align="right"}}</div>
+	</div>
+  </div>
+</template>
+
+<template name="footer">
+  <div class="container">
+    <footer>
+      <p>&copy; 2013 BreadWithFriends &middot; <!--<a href="#">Privacy</a> &middot; <a href="#">Terms</a>--></p>
+    </footer>
+  </div>
+</template>
 
 <!-- 
   This is a simple container for other templates defined in the "screens" directory.
