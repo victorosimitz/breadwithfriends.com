@@ -1,0 +1,8 @@
+{
+	"name": "stripe",
+	"description": "Stripe.js and Node-Stripe brought to Meteor.",
+	"homepage": "https://github.com/appleifreak/stripe-meteor.git",
+	"author": "Tyler Johnson (http://vintyge.com)",
+	"version": "1.0.0",
+	"git": "https://github.com/appleifreak/stripe-meteor.git"
+}
