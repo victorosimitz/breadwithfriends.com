@@ -22,7 +22,7 @@ if (Meteor.isClient) {
       }
       else
       {
-        Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes",res.id);
+        Meteor.call("rsvp",Template.mealDetails.invitation()._id,"yes");
       }
     },
     'click #no_rsvp' : function() {

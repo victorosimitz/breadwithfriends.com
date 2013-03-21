@@ -3,17 +3,6 @@ if (Meteor.isClient) {
     Meteor.subscribe("allUserData"); 
     jQuery.getScript("https://checkout.stripe.com/v2/checkout.js");
   });
-  
-  Template.header.events({
-    'click #navbar_myEvents' : function()
-    {
-      switchToMyEventsScreen();
-    },
-    'click #navbar_createEvent' : function()
-    {
-      switchToCreateOrUpdateEventScreen();
-    }
-  });
 }
 
 if (Meteor.isServer) {

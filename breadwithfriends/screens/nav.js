@@ -47,6 +47,11 @@ if (Meteor.isClient) {
     return (getCurrentScreenName()=="createOrUpdateEvent");
   };
   
+  Template.page.showCreateEventScreenNotUpdate = function()
+  {
+    return (getCurrentScreenName()=="createOrUpdateEvent") && (!Session.get("showScreen").meal_id);
+  };
+  
   var switchToEventInvitesScreen = function(event_id,message)
   {
     if(!event_id) return; //just ignore it without an event
@@ -79,4 +84,15 @@ if (Meteor.isClient) {
   {
     return (getCurrentScreenName()=="reserveMeal");
   }
+  
+  Template.page.events({
+    'click #navbar_myEvents, click #navbar_home' : function()
+    {
+      switchToMyEventsScreen();
+    },
+    'click #navbar_createEvent' : function()
+    {
+      switchToCreateOrUpdateEventScreen();
+    }
+  });
 }
