@@ -1,0 +1,85 @@
+<template name="createOrUpdateEventScreen">
+  {{#if creatingNewEvent}}
+  <h3>New Event</h3>
+  {{else}}
+  <h3>Update Event</h3>
+  {{/if}}
+  <div class="row">
+    <div class="span6">
+      <form class="form-horizontal">
+        <div class="control-group">
+		  <label class="control-label" for="title">Meal Title: </label>
+		  <div class="controls">
+		    <input type="text" id="title" value="{{get_event.title}}"/> 
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="description">Description:</label>
+		  <div class="controls">
+		    <input type="text" id="description" value="{{get_event.description}}"/>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="time">Time:</label>
+		  <div class="controls">
+		    <input type="text" id="time" value="{{time}}"/>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="address">Address:</label>
+		  <div class="controls">
+		    <input type="text" id="address" value="{{get_event.location.address}}"/>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="city">City:</label>
+		  <div class="controls">
+		    <input type="text" id="city" value="{{get_event.location.city}}"/>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="state">State:</label>
+		  <div class="controls">
+		    <input type="text" id="state" value="{{get_event.location.state}}"/>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="zip">Zip Code:</label>
+		  <div class="controls">
+		    <input type="text" id="zip" value="{{get_event.location.zip}}"/>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="price">Price:</label>
+		  <div class="controls">
+		    <div class="input-prepend">
+		    <span class="add-on">$</span>
+		    {{#if mustBeFree}}
+		      <span class="input-xlarge uneditable-input">{{price}}</span>
+		      <input type="hidden" id="price" value="{{price}}"/>
+		    {{else}}
+		      <input type="text" id="price" value="{{price}}"/>
+		    {{/if}}
+		    </div>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="min_guests">Minimum Number of Guests:</label>
+		  <div class="controls">
+		    <input type="text" id="min_guests" value="{{min_guests}}"/>
+		  </div>
+		</div>
+		<div class="control-group">
+		  <label class="control-label" for="max_guests">Maximum Number of Guests:</label>
+		  <div class="controls">
+		    <input type="text" id="max_guests" value="{{max_guests}}"/>
+		  </div>
+		</div>
+		<div class="controls">
+		  <button class="btn btn-primary" id="create-or-update-event">{{#if creatingNewEvent}}Create Event{{else}}Update Event{{/if}}</button>
+		&nbsp;<button id="cancel" class="btn-link">Cancel</button>
+		</div>
+	  </form>
+	</div>
+  </div>
+</template>

@@ -1,0 +1,32 @@
+<template name="myEvents">
+  <h3>My Events</h3>
+  <!-- First the upcoming events -->
+  <ul id="events" class="thumbnails">
+  {{#each meals_upcoming}}
+    {{> meal}}
+  {{/each}}
+  <!-- Now historic events -->
+  {{#each meals_historic}}
+    {{> meal}}
+  {{/each}}
+  </ul>
+</template>
+
+<template name="meal">
+ {{#if show}}
+   <li class="span3 event {{past}}">
+     <div class="thumbnail">
+	   <div class="title"><a href="#" id="show-meal-details">{{title}}</a></div>
+	   <div class="info">{{time}}, {{price}}</div>
+	   <div class="controls">
+		 {{#if canEdit}}
+		   <span class="manage-invites clickable"><i class="icon-user"></i></span> 
+		   <span class="edit-meal clickable"><i class="icon-pencil"></i></span> 
+		   <span class="delete-meal clickable"><i class="icon-remove"></i></span>
+		 {{/if}}
+		 &nbsp;
+	   </div>
+	 </div>
+   </li>
+ {{/if}}
+</template>
