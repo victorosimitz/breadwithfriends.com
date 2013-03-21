@@ -63,10 +63,8 @@ var getUserShortName = function(user_id)
   return "Anonymous"; //this would be pretty embarrassing
 };
 
-var getUserEmails = function(user_id)
+var getUserEmailsFromUser = function(u)
 {
-  if(!user_id) return null;
-  u = Meteor.users.findOne(user_id);
   if(!u) return null;
   emails = [];
   if(u && u.emails)
@@ -79,4 +77,11 @@ var getUserEmails = function(user_id)
     emails.push(u.services.facebook.email);
   //TODO probably should dedupe before returning
   return emails;
+};
+
+var getUserEmails = function(user_id)
+{
+  if(!user_id) return null;
+  u = Meteor.users.findOne(user_id);
+  return getUserEmailsFromUser(u);
 };
