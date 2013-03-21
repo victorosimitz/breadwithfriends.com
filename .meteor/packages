@@ -9,5 +9,4 @@ preserve-inputs
 accounts-ui
 accounts-facebook
 accounts-password
-stripe-meteor
 bootstrap
